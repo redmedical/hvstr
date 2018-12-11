@@ -1,0 +1,38 @@
+{
+  "rules": {
+    "indent": [true, "spaces", 4],
+    "eofline": true,
+    "linebreak-style": [true, "LF"],
+    "quotemark": [true, "single"],
+    "max-line-length": [true, 160],
+    "member-ordering": [
+      true,
+      {
+        "order": [
+          "public-static-field",
+          "protected-static-field",
+          "private-static-field",
+          "public-instance-field",
+          "protected-instance-field",
+          "private-instance-field",
+          "public-constructor",
+          "protected-constructor",
+          "private-constructor",
+          "public-static-method",
+          "protected-static-method",
+          "private-static-method",
+          "public-instance-method",
+          "protected-instance-method",
+          "private-instance-method"
+        ]
+      }
+    ],
+    "no-console": [true, "debug", "info", "time", "timeEnd", "trace"],
+    "typedef": [
+      true,
+      "call-signature",
+      "property-declaration"
+    ],
+    "semicolon": [true, "always"]
+  }
+}
