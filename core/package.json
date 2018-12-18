@@ -1,0 +1,20 @@
+{
+  "name": "@redmedical/HVSTR-core",
+  "version": "1.0.0",
+  "main": "dist/index",
+  "types": "dist/index",
+  "scripts": {
+    "build": "tsc -p .",
+    "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'"
+  },
+  "dependencies": {
+    "@redmedical/HVSTR-utils": "1.0.0",
+    "@types/node": "^10.9.4",
+    "protractor": "~5.1.2",
+    "require-from-string": "^2.0.2",
+    "ts-node": "^7.0.1",
+    "tslint": "~5.9.1",
+    "typescript": "^3.0.3",
+    "mkdirp": "^0.5.1"
+  }
+}
