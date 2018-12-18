@@ -1,0 +1,14 @@
+{
+  "name": "@redmedical/HVSTR-utils",
+  "version": "1.0.0",
+  "main": "dist/index",
+  "types": "dist/index",
+  "scripts": {
+    "build": "tsc -p .",
+    "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'"
+  },
+  "devDependencies": {
+    "typescript": "^3.0.3",
+    "tslint": "~5.9.1"
+  }
+}
