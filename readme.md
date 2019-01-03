@@ -43,15 +43,15 @@ HVSTR is an open source page object generator for [protractor](http://protractor
     Create a hvstr config file from the [example](./samples/quickstart/hvstr.conf.js).  
     Now you can add a npm script, to generate your page object:
 
-    ###### In package.json:
-    ```
-    {
-      "scripts": {
-        "hvstr": "ng e2e --config ./hvstr.conf.js",
-        <...>
-      }
-    }
-    ```
+###### In package.json:
+```
+{
+  "scripts": {
+    "hvstr": "node ./node_modules/protractor/bin/protractor ./hvstr.conf.js",
+    <...>
+  }
+}
+```
 
 5. Now you can add your HVSTR script, to generate your page objects:
 
@@ -74,10 +74,16 @@ HVSTR is an open source page object generator for [protractor](http://protractor
   let startPage = await pageObjectBuilder.generate({
     name: 'HomePage',
     byRoute: '/home',
-  })
+  });
 ```
 
+6. Run:
+
+Serve your application (```npm start``` or ```ng serve```)
 Finally you can run the npm script ```npm run hvstr``` and HVSTR will generate your page objects.
+
+## Continue
+[Next Step - Array-like recurring elements](./docs/guide/array.md)
 
 ## Feedback
 
@@ -94,5 +100,5 @@ See [GitHub wiki](https://github.com/redmedical/HVSTR/wiki)
 
 ## License
 
-Copyright (c) Red Medical Systems GmbH. All rights reserved.  
+Copyright (c) RED Medical Systems GmbH. All rights reserved.  
 Licensed under the Apache-2.0 License.
