@@ -16,18 +16,83 @@ import { IChildPage } from './page-object/child-page';
 import { Awaiter } from './local-utils/types';
 import { initCustomSnippet, CustomSnippets } from './code-generation/element-function-custom-snippet';
 
+/**
+ * Contains all important interfaces to generate page-objects.
+ *
+ * @export
+ * @class PageObjectBuilder
+ * @module HVSTRCorePublicApi
+ */
 export class PageObjectBuilder {
+    /**
+     * See CustomSnippets.
+     *
+     * @type {CustomSnippets}
+     * @memberof PageObjectBuilder
+     */
     public customSnippets: CustomSnippets;
+    /**
+     * The codebuilder passed in the constructor or the default codebuilder
+     *
+     * @type {QueuedCodeBuilder}
+     * @memberof PageObjectBuilder
+     */
     public codeBuilder: QueuedCodeBuilder;
+    /**
+     * In constructor defined, if waitForAngular should be enabled or not
+     *
+     * @type {boolean}
+     * @memberof PageObjectBuilder
+     */
     public waitForAngularEnabled: boolean;
     packagePath: ProjectPathUtil;
+    /**
+     * In constructor defined awaiter
+     *
+     * @type {Awaiter}
+     * @memberof PageObjectBuilder
+     */
     public awaiter: Awaiter;
 
+    /**
+     * Creates an instance of PageObjectBuilder.
+     * @param {{
+     *             codeBuilder?: QueuedCodeBuilder,
+     *             awaiter?: Awaiter,
+     *             e2eTestPath?: string,
+     *             waitForAngularEnabled?: boolean,
+     *         }} params
+     * @memberof PageObjectBuilder
+     */
     constructor(
         params: {
+            /**
+             * Defines the CodeBuilder. See more at QueuedCodeBuilder
+             *
+             * @type {QueuedCodeBuilder}
+             * @default new QueuedCodeBuilder('  ')
+             */
             codeBuilder?: QueuedCodeBuilder,
+            /**
+             * Action that should be performed normally. See more at IGenerationInstruct
+             *
+             * @type {Awaiter}
+             * @default () => {}
+             */
             awaiter?: Awaiter,
+            /**
+             * Defines the root-path, where the page-objects should be stored
+             *
+             * @type {string}
+             * @default '/e2e'
+             */
             e2eTestPath?: string,
+            /**
+             * Defines if the protractor-setting WaitForAngular should be enabled or disabled.
+             *
+             * @type {boolean}
+             * @default true
+             */
             waitForAngularEnabled?: boolean,
         }
     ) {
@@ -40,6 +105,18 @@ export class PageObjectBuilder {
         browser.waitForAngularEnabled(this.waitForAngularEnabled);
     }
 
+    /**
+     * Generates a new page-object.
+     *
+     * @param {IGenerationInstruction} instruct The Instruct parameter passes an object, which defines how the page-object should be generated.
+     * See more at IGenerationInstruction. The entity name is mandatory.
+     * @param {IPageObjectInFabrication} [origin] The origin parameter describes, from which page-object the new page-object derived from.
+     * The parameter is optional and is used primary internal.
+     * @returns {Promise<IPageObjectInFabrication>} the async method returns a Promise of IPageObjectInFabrication.
+     * See IPageObjectInFabrication for detailed information.
+     * @memberof PageObjectBuilder
+     * @throws When no name for the page-object, was contained in the passed instruct, an Error will be thrown.
+     */
     public async generate(instruct: IGenerationInstruction, origin?: IPageObjectInFabrication): Promise<IPageObjectInFabrication> {
         if (!instruct.name) {
             throw 'a new page object needs an name!';
@@ -66,6 +143,16 @@ export class PageObjectBuilder {
         });
     }
 
+    /**
+     * Appends new elements to an existing page-object.
+     *
+     * @param {IGenerationInstruction} instruct The Instruct parameter passes an object, which defines how the page-object should be generated.
+     * See more at [IGenerationInstruction](../i-generation-instruction/index.md).
+     * @param {IPageObjectInFabrication} scope The original page-object, which the new elements will be merged to.
+     * @returns {Promise<IPageObjectInFabrication>} the async method returns a ```Promise``` of ```IPageObjectInFabrication```.
+     * See [```IPageObjectInFabrication```]() for detailed information.
+     * @memberof PageObjectBuilder
+     */
     public async append(instruct: IGenerationInstruction, scope: IPageObjectInFabrication): Promise<IPageObjectInFabrication> {
         if(!instruct.path && scope.instruct.path) {
             // Append should not change Path on default
@@ -96,6 +183,19 @@ export class PageObjectBuilder {
         return newLocal;
     }
 
+    /**
+     * Appends a page-object as child object to a parent page-object.
+     * The child-page-object will be composited as a entity to the parent page-object.
+     * When a new instance of the parent page-object is created, all child page-objects will be instantiated to.
+     *
+     * @param {IGenerationInstruction} instruct The Instruct parameter passes an object, which defines how the page-object should be generated.
+     * See more at [IGenerationInstruction](../i-generation-instruction/index.md).
+     * @param {IPageObjectInFabrication} scope The original page-object, which the new child page-object will added to.
+     * @returns {Promise<IPageObjectInFabrication>} the async method returns a ```Promise``` of ```IPageObjectInFabrication```.
+     * The returned page-object is the parent page-object, containing the new child page-object.
+     * See [```IPageObjectInFabrication```]() for detailed information.
+     * @memberof PageObjectBuilder
+     */
     public async appendChild(instruct: IGenerationInstruction, scope: IPageObjectInFabrication): Promise<IPageObjectInFabrication> {
         if (!instruct.name) {
             throw 'a new page object needs an name!';
@@ -117,6 +217,15 @@ export class PageObjectBuilder {
         return parent;
     }
 
+    /**
+     * Adds a navigateTo function and a entity route to the page-object.
+     * The route entity is of type string and contains the route at the active browser state. The navigateTo method lets you navigate to the route.
+     *
+     * @param {IPageObjectInFabrication} scope The original page-object, which the navigateTo method and route entity will be added to.
+     * @returns {Promise<IPageObjectInFabrication>} the async method returns a ```Promise``` of ```IPageObjectInFabrication```.
+     * See [```IPageObjectInFabrication```]() for detailed information.
+     * @memberof PageObjectBuilder
+     */
     public async addNavigateTo(scope: IPageObjectInFabrication): Promise<IPageObjectInFabrication> {
         const route: string = await BrowserApi.getRoute();
         const parent =
@@ -133,6 +242,22 @@ export class PageObjectBuilder {
         return parent;
     }
 
+    // tslint:disable:max-line-length
+    /**
+     * Adds two methods to the page-object, fillForm and clearForm.
+     * For each input element found on the page, the two methods will provide the following functionality.
+     *
+     * | function | description |
+     * |----------|-------------|
+     * | fillForm(data) | The fillForm method will fill out any input element with the provided data. The data is provided by the data attribute, which requires a customized interface, according to all found inputs. Each inputs id will be a parameter for the function, in camelCase. |
+     * | clearForm() | clears all content from all inputs.|
+     *
+     * @param {IPageObjectInFabrication} scope The original page-object, which the fillForm and clearForm method will be added to.
+     * @returns {Promise<IPageObjectInFabrication>} the async method returns a Promise of IPageObjectInFabrication.
+     * See IPageObjectInFabrication for detailed information.
+     * @memberof PageObjectBuilder
+     */
+    // tslint:enable:max-line-length
     public async addFillForm(scope: IPageObjectInFabrication): Promise<IPageObjectInFabrication> {
         const parent =
             await this.openAndGeneratePageObject({
@@ -148,7 +273,9 @@ export class PageObjectBuilder {
         return parent;
     }
 
-
+    /**
+     * @private
+     */
     private async executeByPreparer(instruct: IGenerationInstruction, origin: IPageObjectInFabrication | undefined): Promise<void> {
         const awaiter: Awaiter = instruct.awaiter || this.awaiter;
         if (instruct.from) {
@@ -176,6 +303,9 @@ export class PageObjectBuilder {
         await awaiter(2);
     }
 
+    /**
+     * @private
+     */
     private async openAndGeneratePageObject(params: IOpenAndGeneratePageObjectInstruct): Promise<IPageObjectInFabrication> {
         const generateGeneratedPageObject: GeneratedPageObjectCodeGenerator = new GeneratedPageObjectCodeGenerator();
         const generateExtendingPageObject: ExtendingPageObjectCodeGenerator = new ExtendingPageObjectCodeGenerator();
@@ -238,6 +368,9 @@ export class PageObjectBuilder {
         });
     }
 
+    /**
+     * @private
+     */
     private writePageObject(code: string, path: Path, overwrite: boolean = true): void {
         path.mkdirp();
         if (overwrite || !fs.existsSync(path.fullName)) {
@@ -245,6 +378,9 @@ export class PageObjectBuilder {
         }
     }
 
+    /**
+     * @private
+     */
     private getEmptyInstructFromOrigin(instruct: IGenerationInstruction): IGenerationInstruction {
         return {
             name: instruct.name,
@@ -255,6 +391,9 @@ export class PageObjectBuilder {
     }
 }
 
+/**
+ * @private
+ */
 interface IOpenAndGeneratePageObjectInstruct {
     instruct: IGenerationInstruction;
     pageObjectName: string;

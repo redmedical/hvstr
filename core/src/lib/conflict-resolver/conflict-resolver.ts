@@ -2,6 +2,9 @@ import { ConflictTree } from './conflict-tree';
 import { E2eElement } from '../e2e-element/e2e-element';
 import { ConflictElement } from './conflict-element';
 
+/**
+ * @private
+ */
 export function ConflictResolver(tree: E2eElement[]): void{
     const maybeConflictTree: ConflictTree | null = buildConflictTree(tree);
     if(!maybeConflictTree) {
@@ -16,6 +19,9 @@ export function ConflictResolver(tree: E2eElement[]): void{
     });
 }
 
+/**
+ * @private
+ */
 function buildConflictTree(elementTree: E2eElement[], conflictTree?: ConflictTree): ConflictTree | null {
     if(!elementTree || elementTree.length === 0) {
         return null;
@@ -31,6 +37,9 @@ function buildConflictTree(elementTree: E2eElement[], conflictTree?: ConflictTre
     return conflictTree || null;
 }
 
+/**
+ * @private
+ */
 function getConflictElementArrayLike(conflictElementArray: ConflictElement[]): IConflictElementArrayLike {
     return {
         resolveParentPathForEach(): IConflictElementArrayLike {
@@ -56,6 +65,9 @@ function getConflictElementArrayLike(conflictElementArray: ConflictElement[]): I
     };
 }
 
+/**
+ * @private
+ */
 interface IConflictElementArrayLike {
     resolveParentPathForEach(): IConflictElementArrayLike;
     setConflictFreeIdForEach(): IConflictElementArrayLike;

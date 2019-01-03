@@ -1,8 +1,14 @@
 import * as NodePath from 'path';
 import * as fs from 'fs';
 import { CaseConvert } from './case-converter';
+/**
+ * @private
+ */
 const mkdirp = require('mkdirp');
 
+/**
+ * @private
+ */
 export class ProjectPathUtil {
 
     root = new Path(undefined, this.appRoot);
@@ -31,6 +37,9 @@ export class ProjectPathUtil {
     }
 }
 
+/**
+ * @private
+ */
 export class Path {
     constructor(
         public root: Path | undefined,

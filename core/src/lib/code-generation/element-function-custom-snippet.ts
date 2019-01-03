@@ -4,6 +4,9 @@ import { Utils } from '@redmedical/HVSTR-utils';
 import { CaseConvert } from '../local-utils/case-converter';
 import { GetterFunction, getParameterNameForElement } from '../e2e-element/getter-function';
 
+/**
+ * @private
+ */
 export function initCustomSnippet(): CustomSnippets {
   const rules: CustomSnippets = new CustomSnippets();
   rules.add({
@@ -84,11 +87,27 @@ export function initCustomSnippet(): CustomSnippets {
   return rules;
 }
 
+
+/**
+ * CustomSnippets are providing the possibility, to add custom code to your page-object, for matching elements.
+ *
+ * @export
+ * @class CustomSnippets
+ */
 export class CustomSnippets{
   private allCustomSnippet: ICustomSnippet[] = [];
+  /**
+   * adds a new CustomSnippet to the list of CustomSnippets, which will be used.
+   *
+   * @param {ICustomSnippet} customSnippet
+   * @memberof CustomSnippets
+   */
   public add(customSnippet: ICustomSnippet): void{
     this.allCustomSnippet.push(customSnippet);
   }
+  /**
+   * @private
+   */
   public execute(
     element: E2eElement,
     codeBuilder: QueuedCodeBuilder,
@@ -102,18 +121,50 @@ export class CustomSnippets{
   }
 }
 
+
+/**
+ * represents a CustomSnippet.
+ *
+ * @interface ICustomSnippet
+ */
 interface ICustomSnippet {
+  /**
+   * A function which returns true, when the custom snippet should be used.
+   *
+   * Example:
+   * ```ts
+   * (element) => element.type === 'BUTTON'
+   * ```
+   *
+   * @param {E2eElement} element The element, for which the page-object code is actually generated.
+   * @memberof ICustomSnippet
+   */
   condition: (element: E2eElement) => boolean;
+  /**
+   * The callBack adds the new code to the codeBuilder.
+   *
+   * @param {E2eElement} element The element, for which the page-object code is actually generated.
+   * @param {QueuedCodeBuilder} codeBuilder The codeBuilder, which generates the page-object.
+   * @param {string[]} protractorImports List of all imports from protractors. It can be extendet, when more are needed.
+   * @memberof ICustomSnippet
+   */
   callBack: (
     element: E2eElement,
     codeBuilder: QueuedCodeBuilder,
     protractorImports: string[],
   ) => Promise<void>;
 }
+
+/**
+ * @private
+ */
 function getGetterIndexParameterVariableName(element: E2eElement): string {
   return Utils.firstCharToLowerCase(getParameterNameForElement(element.parentElement!.id)) + 'Index';
 }
 
+/**
+ * @private
+ */
 function idWithoutArrayAnnotation(idResult: string): string {
   const arrayAnnotationLength = 2;
   return idResult.substr(0, idResult.length - arrayAnnotationLength);

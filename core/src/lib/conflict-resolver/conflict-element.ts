@@ -1,7 +1,9 @@
 import { E2eElement } from '../e2e-element/e2e-element';
-
+/**
+ * @private
+ */
 export class ConflictElement {
-    
+
     public maybeParentPath: parentPathStep[] | undefined;
 
     constructor(
@@ -47,6 +49,9 @@ export class ConflictElement {
     }
 }
 
+/**
+ * @private
+ */
 interface parentPathStep {
     element: E2eElement;
     isConflictRoot: boolean;

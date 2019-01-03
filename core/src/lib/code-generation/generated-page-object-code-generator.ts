@@ -6,6 +6,9 @@ import { IChildPage } from '../page-object/child-page';
 import { Path } from '../local-utils/path';
 import { CustomSnippets } from './element-function-custom-snippet';
 
+/**
+ * @private
+ */
 export class GeneratedPageObjectCodeGenerator {
     generatePageObject(params: IGeneratePageObjectRootParameter): string {
         params.codeBuilder.reset();
@@ -194,6 +197,9 @@ export class GeneratedPageObjectCodeGenerator {
     }
 }
 
+/**
+ * @private
+ */
 interface IGeneratePageObjectRootParameter extends
     IGeneratePageObjectAddHelperMethodsParameter,
     IGeneratePageObjectAddGetterMethodsParameter,
@@ -201,22 +207,34 @@ interface IGeneratePageObjectRootParameter extends
     pageName: string;
 }
 
+/**
+ * @private
+ */
 interface IGeneratePageObjectParameter{
     codeBuilder: QueuedCodeBuilder;
 }
 
+/**
+ * @private
+ */
 interface IGeneratePageObjectAddHelperMethodsParameter extends IGeneratePageObjectParameter {
     codeBuilder: QueuedCodeBuilder;
     route?: string;
     hasFillForm: boolean;
 }
 
+/**
+ * @private
+ */
 interface IGeneratePageObjectAddGetterMethodsParameter extends IGeneratePageObjectParameter {
     codeBuilder: QueuedCodeBuilder;
     elementTreeRoot: E2eElement[];
     rules: CustomSnippets;
 }
 
+/**
+ * @private
+ */
 interface IGeneratePageObjectAddImportsParameter extends IGeneratePageObjectParameter {
     codeBuilder: QueuedCodeBuilder;
     generatedPageObjectPath?: Path;

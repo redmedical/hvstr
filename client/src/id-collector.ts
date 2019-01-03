@@ -1,9 +1,36 @@
 import { IE2eElement, Utils } from '@redmedical/HVSTR-utils';
 
+/**
+ * The IdCollector is responsible to collect and prepare the elements, from which the page-objects will be generated, in the application context.
+ * It provides a api to the core part in the NodeJs context.
+ *
+ * __Important:__
+ * You need to call the init method, before you can do anything else.
+ *
+ * __Hint:__
+ * Use the Id collector just in development mode or in a dedicated environment mode, so it can not interfere your production.
+ *
+ * ## global methods
+ * | signature | description |
+ * |-----------|-------------|
+ * |[```window.getE2eElementTree(): IE2eElement[]```](./get-e2e-element-tree.md)| Provides the elements from the IDCollector as a tree. |
+ * |[```window.getE2eElementList(): IE2eElement[]```](./get-e2e-element-list.md)| Provides the elements from the IDCollector as a list. |
+ *
+ * @export
+ * @class IdCollector
+ */
 export class IdCollector {
     private static allE2EIds: IE2eElement[] = [];
     private static uidCounter: number = 0;
     private static isInitialized: boolean = false;
+
+
+    /**
+     * Initializes the IdCollector.
+     *
+     * @static
+     * @memberof IdCollector
+     */
     public static init(): void {
         (window as any)[Utils.getE2eElementTreeFunctionName] = () => this.buildTree();
         (window as any)[Utils.getListFunctionName] = () => {
@@ -14,6 +41,14 @@ export class IdCollector {
         IdCollector.isInitialized = true;
     }
 
+    /**
+     * Adds an element to the IdCollector.
+     *
+     * @static
+     * @param {Element} nativeElement
+     * @param {string} id
+     * @memberof IdCollector
+     */
     public static add(nativeElement: Element, id: string): void {
         if (!IdCollector.isInitialized) {
             throw `IdCollector not initialized. Run 'IdCollector.init()' first!`;
@@ -28,6 +63,13 @@ export class IdCollector {
         IdCollector.uidCounter++;
     }
 
+    /**
+     * Removes a element from the IdCollector.
+     *
+     * @static
+     * @param {string} id
+     * @memberof IdCollector
+     */
     public static remove(id: string): void {
         if (!IdCollector.isInitialized) {
             throw `IdCollector not initialized. Run 'IdCollector.init()' first!`;
@@ -73,6 +115,5 @@ export class IdCollector {
         nativeElement.setAttribute('e2e-parent', parentUid);
         IdCollector.addParentRecursiveForEachChild(nativeElement, parentUid);
     }
-
 
 }
