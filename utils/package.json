@@ -5,10 +5,12 @@
   "types": "dist/index",
   "scripts": {
     "build": "tsc -p .",
-    "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'"
+    "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
+    "typedoc": "node node_modules/typedoc/bin/typedoc --out ../docs/api/utils --module commonjs --mode file --target es6 --readme none --name \"HVSTR-utils API Documentation\" --tsconfig ./tsconfig.json --ignoreCompilerErrors ./src/"
   },
   "devDependencies": {
     "typescript": "^3.0.3",
-    "tslint": "~5.9.1"
+    "tslint": "~5.9.1",
+    "typedoc": "^0.14.0"
   }
 }

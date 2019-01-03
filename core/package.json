@@ -5,7 +5,8 @@
   "types": "dist/index",
   "scripts": {
     "build": "tsc -p .",
-    "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'"
+    "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
+    "typedoc": "node node_modules/typedoc/bin/typedoc --out ../docs/api/core --module commonjs --mode file --target es6 --readme none --name \"HVSTR-core API Documentation\" --tsconfig ./tsconfig.json --ignoreCompilerErrors ./src/"
   },
   "dependencies": {
     "@redmedical/HVSTR-utils": "1.0.0",
@@ -16,5 +17,8 @@
     "tslint": "~5.9.1",
     "typescript": "^3.0.3",
     "mkdirp": "^0.5.1"
+  },
+  "devDependencies": {
+    "typedoc": "^0.14.0"
   }
 }
