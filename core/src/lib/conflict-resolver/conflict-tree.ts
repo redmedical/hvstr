@@ -1,6 +1,9 @@
 import { E2eElement } from '../e2e-element/e2e-element';
 import { ConflictElement } from './conflict-element';
 
+/**
+ * @private
+ */
 export class ConflictTree {
     public less: ConflictTree | undefined;
     public greater: ConflictTree | undefined;

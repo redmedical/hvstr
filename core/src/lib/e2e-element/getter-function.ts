@@ -1,10 +1,16 @@
 import { Utils } from '@redmedical/HVSTR-utils';
 
+/**
+ * @private
+ */
 export interface GetterFunction {
     functionName: string;
     parameters: { name: string, type: string }[];
 }
 
+/**
+ * @private
+ */
 export function getParameterNameForElement(id: string): string {
     const isCamelArrayId = id.match(Utils.isCamelArrayId);
     let idResult = id;

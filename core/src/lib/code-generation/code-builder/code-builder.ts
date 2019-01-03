@@ -1,3 +1,6 @@
+/**
+ * @private
+ */
 export class CodeBuilder {
     private code: string;
     private tabDepth: number;

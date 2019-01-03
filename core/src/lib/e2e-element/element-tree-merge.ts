@@ -1,5 +1,8 @@
 import { E2eElement } from './e2e-element';
 
+/**
+ * @private
+ */
 export function elementTreeMerge(
     oldTree: E2eElement[],
     addendTree: E2eElement[],
@@ -20,6 +23,9 @@ export function elementTreeMerge(
     return resultTree;
 }
 
+/**
+ * @private
+ */
 function addAddendTree(
     resultTree: E2eElement[],
     addendTree: E2eElement[],
@@ -47,6 +53,9 @@ function addAddendTree(
     }
 }
 
+/**
+ * @private
+ */
 function extendChildrenTreePartitionsRecursive(
     resultTree: E2eElement[],
     addendTree: E2eElement[],

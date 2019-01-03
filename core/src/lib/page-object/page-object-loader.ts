@@ -7,13 +7,22 @@ import { Path } from '../local-utils/path';
 import { IChildPage } from './child-page';
 import { CaseConvert } from '../local-utils/case-converter';
 
+/**
+ * @private
+ */
 const requireFromString = require('require-from-string');
 
+/**
+ * @private
+ */
 export function compilePageObject(tsCode: string): string {
     const result = ts.transpileModule(tsCode, { compilerOptions: { module: ts.ModuleKind.CommonJS } });
     return result.outputText;
 }
 
+/**
+ * @private
+ */
 export function requirePageObject(params: IPageObjLoadParams): IPageObjectInFabrication {
     const pageDef = requireFromString(params.jsCode, {
         appendPaths: [],
@@ -24,6 +33,9 @@ export function requirePageObject(params: IPageObjLoadParams): IPageObjectInFabr
     return result;
 }
 
+/**
+ * @private
+ */
 function setResultMethodeAttributes(result: IPageObjectInFabrication, pageObjectBuilder: PageObjectBuilder): void {
     result.append = (instruct: IGenerationInstruction) => pageObjectBuilder.append(instruct, result);
     result.appendChild = (instruct: IGenerationInstruction) => pageObjectBuilder.appendChild(instruct, result);
@@ -31,6 +43,9 @@ function setResultMethodeAttributes(result: IPageObjectInFabrication, pageObject
     result.addFillForm = () => pageObjectBuilder.addFillForm(result);
 }
 
+/**
+ * @private
+ */
 function setResultAttributes(
     result: IPageObjectInFabrication,
     params: IPageObjLoadParams
@@ -55,6 +70,9 @@ function setResultAttributes(
     }
 }
 
+/**
+ * @private
+ */
 interface IPageObjLoadParams {
     instruct: IGenerationInstruction;
     pageObjectName: string;

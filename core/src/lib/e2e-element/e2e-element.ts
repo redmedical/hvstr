@@ -2,6 +2,9 @@ import { IE2eElement, Utils } from '@redmedical/HVSTR-utils';
 import { GetterFunction } from './getter-function';
 import { CaseConvert } from '../local-utils/case-converter';
 
+/**
+ * @private
+ */
 export class E2eElement {
     public idInput: string;
     public conflictFreeId: string;
