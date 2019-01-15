@@ -22,7 +22,7 @@ export class PageObjectBuilder {
     public waitForAngularEnabled: boolean;
     packagePath: ProjectPathUtil;
     public awaiter: Awaiter;
-    
+
     constructor(
         params: {
             codeBuilder?: QueuedCodeBuilder,
@@ -33,7 +33,7 @@ export class PageObjectBuilder {
     ) {
         this.codeBuilder = params.codeBuilder || new QueuedCodeBuilder('  ');
         this.awaiter = params.awaiter || (async () => {});
-        this.waitForAngularEnabled = params.waitForAngularEnabled || true;
+        this.waitForAngularEnabled = params.waitForAngularEnabled === undefined ? true : params.waitForAngularEnabled;
         this.packagePath = new ProjectPathUtil(process.cwd(), params.e2eTestPath || '/e2e');
         this.packagePath.createAllDirectories();
         this.customSnippets = initCustomSnippet();
@@ -159,7 +159,7 @@ export class PageObjectBuilder {
         if (instruct.byRoute) {
             await browser.get(instruct.byRoute);
             // After the redirect, the script continues while the browser is still loading.
-            // it looks like waitForAngular resolves the promise immediately, because no Angular app 
+            // it looks like waitForAngular resolves the promise immediately, because no Angular app
             await BrowserApi.awaitDocumentToBeReady();
             await browser.sleep(2000);
             if(this.waitForAngularEnabled){
@@ -183,7 +183,7 @@ export class PageObjectBuilder {
         const generatedPageObjectPath: Path = this.packagePath.getFilePath(params.pageObjectName, params.instructPath, false);
         const generatedExtendingPageObjectPath: Path = this.packagePath.getFilePath(params.pageObjectName, params.instructPath, true);
 
-        const generatedPageObject: string = 
+        const generatedPageObject: string =
             generateGeneratedPageObject.generatePageObject({
                 pageName: params.pageObjectName,
                 generatedPageObjectPath,
