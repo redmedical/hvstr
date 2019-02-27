@@ -36,11 +36,11 @@ HVSTR is an open source page object generator for [protractor](http://protractor
       ],
     })
     ```
-    And adapt the path to your environment.
+    And adapt the path to your environment config in the directive.
 
 4. Add npm script and HVSTR config: 
 
-    Create a hvstr config file ([example](./samples/quickstart/hvstr.conf.js) more in the [GitHub wiki](https://github.com/redmedical/HVSTR/wiki)).  
+    Create a hvstr config file from the [example](./samples/quickstart/hvstr.conf.js).  
     Now you can add a npm script, to generate your page object:
 
     ###### In package.json:
