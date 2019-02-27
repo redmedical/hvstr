@@ -14,7 +14,7 @@
 * Ensure the PR description clearly describes the problem and solution. Include the relevant issue number if applicable.
 
 ### Format of the commit messages
-* see [format of the commit message](https://gist.github.com/MichaRedM/e3d5e0f01208eb4be3b4be6cd17e7d2d#format-of-the-commit-message)
+* see [format of the commit message](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#commit-message-format)
 * use one of the following scopes:
     * core - for changes at the core module
     * client - for changes at the client module
