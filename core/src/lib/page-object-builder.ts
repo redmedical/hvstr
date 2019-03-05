@@ -118,7 +118,7 @@ export class PageObjectBuilder {
      */
     public async generate(instruct: IGenerationInstruction, origin?: IPageObjectInFabrication): Promise<IPageObjectInFabrication> {
         if (!instruct.name) {
-            throw 'a new page object needs an name!';
+            throw new Error('a new page object needs an name!');
         }
         await this.executeByPreparer(instruct, origin);
         const newTree: E2eElement[] = (await BrowserApi.getE2eElementTree()).map(x => new E2eElement(x));
@@ -158,7 +158,7 @@ export class PageObjectBuilder {
             instruct.path = scope.instruct.path;
         }
         await this.executeByPreparer(instruct, scope);
-        const newTree: E2eElement[] = (await BrowserApi.getE2eElementTree()).map(x => new E2eElement(x))
+        const newTree: E2eElement[] = (await BrowserApi.getE2eElementTree()).map(x => new E2eElement(x));
         const e2eElementTree: E2eElement[] = elementTreeMerge(
             scope.e2eElementTree,
             newTree,
@@ -168,18 +168,16 @@ export class PageObjectBuilder {
         );
         mergeDuplicateArrayElements(e2eElementTree);
         ConflictResolver(e2eElementTree);
-        const newLocal =
-            await this.openAndGeneratePageObject({
-                instruct,
-                pageObjectName: scope.name,
-                instructPath: scope.instruct.path,
-                e2eElementTree: e2eElementTree,
-                childPages: scope.childPages,
-                origin: scope,
-                route: scope.route,
-                hasFillForm: scope.hasFillForm
-            });
-        return newLocal;
+        return await this.openAndGeneratePageObject({
+            instruct,
+            pageObjectName: scope.name,
+            instructPath: scope.instruct.path,
+            e2eElementTree: e2eElementTree,
+            childPages: scope.childPages,
+            origin: scope,
+            route: scope.route,
+            hasFillForm: scope.hasFillForm
+        });
     }
 
     /**
@@ -197,7 +195,7 @@ export class PageObjectBuilder {
      */
     public async appendChild(instruct: IGenerationInstruction, scope: IPageObjectInFabrication): Promise<IPageObjectInFabrication> {
         if (!instruct.name) {
-            throw 'a new page object needs an name!';
+            throw new Error('a new page object needs an name!');
         }
         const child: IPageObjectInFabrication = await this.generate(instruct, scope);
         const childPages: IChildPage[] = [...scope.childPages, {name: instruct.name, pageObject: child}];
@@ -273,9 +271,10 @@ export class PageObjectBuilder {
     }
 
     /**
+     * should not be used, is not declared as private in code, for testing capability.
      * @private
      */
-    private async executeByPreparer(instruct: IGenerationInstruction, origin: IPageObjectInFabrication | undefined): Promise<void> {
+    async executeByPreparer(instruct: IGenerationInstruction, origin: IPageObjectInFabrication | undefined): Promise<void> {
         const awaiter: Awaiter = instruct.awaiter || this.awaiter;
         if (instruct.from) {
             await this.executeByPreparer(instruct.from.instruct, instruct.from.origin);
@@ -288,7 +287,7 @@ export class PageObjectBuilder {
             // it looks like waitForAngular resolves the promise immediately, because no Angular app
             await BrowserApi.awaitDocumentToBeReady();
             await BrowserApi.sleep(2000);
-            if(this.waitForAngularEnabled){
+            if (this.waitForAngularEnabled){
                 await BrowserApi.waitForAngular();
             }
         }
@@ -303,9 +302,10 @@ export class PageObjectBuilder {
     }
 
     /**
+     * should not be used, is not declared as private in code, for testing capability.
      * @private
      */
-    private async openAndGeneratePageObject(params: IOpenAndGeneratePageObjectInstruct): Promise<IPageObjectInFabrication> {
+    async openAndGeneratePageObject(params: IOpenAndGeneratePageObjectInstruct): Promise<IPageObjectInFabrication> {
         const generateGeneratedPageObject: GeneratedPageObjectCodeGenerator = new GeneratedPageObjectCodeGenerator();
         const generateExtendingPageObject: ExtendingPageObjectCodeGenerator = new ExtendingPageObjectCodeGenerator();
 
@@ -323,11 +323,11 @@ export class PageObjectBuilder {
                 hasFillForm: params.hasFillForm,
                 rules: this.customSnippets,
             });
-        if(!params.instruct.virtual) {
+        if (!params.instruct.virtual) {
             this.writePageObject(generatedPageObject, generatedPageObjectPath);
         }
 
-        if(!generatedExtendingPageObjectPath.exists) {
+        if (!generatedExtendingPageObjectPath.exists) {
             const generatedExtendingPageObject: string =
                 generateExtendingPageObject.generatePageObject(
                     params.pageObjectName,
@@ -368,9 +368,10 @@ export class PageObjectBuilder {
     }
 
     /**
+     * should not be used, is not declared as private in code, for testing capability.
      * @private
      */
-    private writePageObject(code: string, path: Path, overwrite: boolean = true): void {
+    writePageObject(code: string, path: Path, overwrite: boolean = true): void {
         path.mkdirp();
         if (overwrite || !fs.existsSync(path.fullName)) {
             fs.writeFileSync(path.fullName, code);
@@ -378,15 +379,16 @@ export class PageObjectBuilder {
     }
 
     /**
+     * should not be used, is not declared as private in code, for testing capability.
      * @private
      */
-    private getEmptyInstructFromOrigin(instruct: IGenerationInstruction): IGenerationInstruction {
+    getEmptyInstructFromOrigin(instruct: IGenerationInstruction): IGenerationInstruction {
         return {
             name: instruct.name,
             virtual: instruct.virtual,
             excludeElements: instruct.excludeElements,
             path: instruct.path,
-        }
+        };
     }
 }
 
