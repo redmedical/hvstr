@@ -48,4 +48,56 @@ export class BrowserApi {
         const x = await browser.executeScript(`return document.readyState`);
         return (x as string);
     }
+
+    /**
+     * Wraps waitForAngularEnabled for testing capability.
+     *
+     * @static
+     * @param {boolean} enabled
+     * @returns {Promise<boolean>}
+     * @memberof BrowserApi
+     * @private
+     */
+    static setWaitForAngularEnabled(enabled: boolean): void {
+        browser.waitForAngularEnabled(enabled);
+    }
+
+    /**
+     * Wraps sleep for testing capability.
+     *
+     * @static
+     * @param {number} milliseconds
+     * @returns {Promise<void>}
+     * @memberof BrowserApi
+     */
+    static async sleep(milliseconds: number): Promise<void> {
+        await browser.sleep(milliseconds);
+    }
+
+    /**
+     * Wraps waitForAngular for testing capability.
+     *
+     * @static
+     * @param {string} [opt_description]
+     * @returns {Promise<void>}
+     * @memberof BrowserApi
+     */
+    static async waitForAngular(opt_description?: string): Promise<void> {
+        await browser.waitForAngular(opt_description);
+    }
+
+    /**
+     * Wraps get for testing capability.
+     *
+     * @static
+     * @param {string} destination
+     * @param {number} [timeout]
+     * @returns {Promise<void>}
+     * @memberof BrowserApi
+     */
+    static async navigate(destination: string, timeout?: number): Promise<void> {
+        await browser.get(destination, timeout);
+    }
+
+
 }
