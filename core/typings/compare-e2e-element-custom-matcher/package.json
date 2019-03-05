@@ -1,0 +1,10 @@
+{
+    "dependencies": {},
+    "deprecated": false,
+    "main": "",
+    "name": "@types/compare-e2e-element-custom-matcher",
+    "scripts": {},
+    "typeScriptVersion": "2.8",
+    "types": "index",
+    "version": "0.0.0"
+}
