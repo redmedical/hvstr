@@ -1,4 +1,4 @@
-import { IE2eElement, Utils } from '@redmedical/HVSTR-utils';
+import { ISimpleE2EElement, Utils } from '@redmedical/HVSTR-utils';
 import { GetterFunction } from './getter-function';
 import { CaseConvert } from '../local-utils/case-converter';
 
@@ -10,17 +10,15 @@ export class E2eElement {
     public conflictFreeId: string;
     public parentElement?: E2eElement;
     public type: string;
-    public nativeElement: Element;
     public children: E2eElement[];
     public getterFunction: GetterFunction | undefined;
 
     constructor(
-        data: IE2eElement,
+        data: ISimpleE2EElement,
         parent?: E2eElement,
     ){
         this.idInput = data.id;
         this.type = data.type;
-        this.nativeElement = data.nativeElement;
         this.conflictFreeId = this.id;
         this.children = data.children.map(x => new E2eElement(x, this));
         this.parentElement = parent;

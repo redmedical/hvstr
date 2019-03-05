@@ -5,11 +5,15 @@
  * @export
  * @interface IE2eElement
  */
-export interface IE2eElement {
+export interface IE2eElement extends ISimpleE2EElement {
     uid: string;
+    nativeElement: Element;
+    children: IE2eElement[];
+}
+
+export interface ISimpleE2EElement {
     id: string;
     parent?: string;
     type: string;
-    nativeElement: Element;
-    children: IE2eElement[];
+    children: ISimpleE2EElement[];
 }
