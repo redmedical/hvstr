@@ -7,7 +7,8 @@
     "build": "tsc -p .",
     "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "typedoc": "node node_modules/typedoc/bin/typedoc --out ../docs/api/core --module commonjs --mode file --target es6 --readme none --name \"HVSTR-core API Documentation\" --tsconfig ./tsconfig.json --ignoreCompilerErrors ./src/",
-    "test": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json"
+    "test": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json",
+    "coverage": "ts-node node_modules/nyc/bin/nyc.js npm rum test"
   },
   "dependencies": {
     "@redmedical/HVSTR-utils": "file:../utils",
@@ -15,11 +16,12 @@
     "protractor": "~5.1.2",
     "require-from-string": "^2.0.2",
     "ts-node": "^7.0.1"
-},
-"devDependencies": {
+  },
+  "devDependencies": {
     "@types/jasmine": "^3.3.9",
     "@types/node": "^10.9.4",
     "jasmine": "^3.3.1",
+    "nyc": "^13.3.0",
     "tslint": "~5.9.1",
     "typedoc": "^0.14.0",
     "typescript": "^3.0.3"
