@@ -32,6 +32,7 @@
       true,
       "call-signature",
       "property-declaration"
-    ]
+    ],
+    "semicolon": [true, "always"]
   }
 }
