@@ -93,13 +93,21 @@ export class PageObjectBuilder {
              * @default true
              */
             waitForAngularEnabled?: boolean,
+            /**
+             * Forbid HVSTR to create default page object directory's.
+             *
+             * @type {boolean}
+             */
+            doNotCreateDirectorys?: boolean,
         }
     ) {
         this.codeBuilder = params.codeBuilder || new QueuedCodeBuilder('  ');
         this.awaiter = params.awaiter || (async () => {});
         this.waitForAngularEnabled = params.waitForAngularEnabled === undefined ? true : params.waitForAngularEnabled;
         this.packagePath = new ProjectPathUtil(process.cwd(), params.e2eTestPath || '/e2e');
-        this.packagePath.createAllDirectories();
+        if (!params.doNotCreateDirectorys) {
+            this.packagePath.createAllDirectories();
+        }
         this.customSnippets = initCustomSnippet();
         BrowserApi.setWaitForAngularEnabled(this.waitForAngularEnabled);
     }
