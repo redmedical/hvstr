@@ -1,5 +1,4 @@
 import { IGenerationInstruction } from './local-utils/generation-instruction';
-import { browser, ExpectedConditions, element, by } from 'protractor';
 import * as fs from 'fs';
 import { BrowserApi } from './local-utils/browser-api';
 import { GeneratedPageObjectCodeGenerator } from './code-generation/generated-page-object-code-generator';
@@ -102,7 +101,7 @@ export class PageObjectBuilder {
         this.packagePath = new ProjectPathUtil(process.cwd(), params.e2eTestPath || '/e2e');
         this.packagePath.createAllDirectories();
         this.customSnippets = initCustomSnippet();
-        browser.waitForAngularEnabled(this.waitForAngularEnabled);
+        BrowserApi.setWaitForAngularEnabled(this.waitForAngularEnabled);
     }
 
     /**
@@ -284,13 +283,13 @@ export class PageObjectBuilder {
             await this.executeByPreparer(origin.instruct, origin.origin);
         }
         if (instruct.byRoute) {
-            await browser.get(instruct.byRoute);
+            await BrowserApi.navigate(instruct.byRoute);
             // After the redirect, the script continues while the browser is still loading.
             // it looks like waitForAngular resolves the promise immediately, because no Angular app
             await BrowserApi.awaitDocumentToBeReady();
-            await browser.sleep(2000);
+            await BrowserApi.sleep(2000);
             if(this.waitForAngularEnabled){
-                await browser.waitForAngular();
+                await BrowserApi.waitForAngular();
             }
         }
         await awaiter(1);
