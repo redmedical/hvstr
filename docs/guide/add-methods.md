@@ -1,5 +1,5 @@
 # Add Methods
-HVSTR provides an interface, to add useful methods to a page-object.
+hvstr provides an interface, to add useful methods to a page-object.
 
 ## AddNavigateTo
 call the

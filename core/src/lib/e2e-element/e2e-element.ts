@@ -1,4 +1,4 @@
-import { ISimpleE2EElement, Utils } from '@redmedical/HVSTR-utils';
+import { ISimpleE2EElement, Utils } from '@redmedical/hvstr-utils';
 import { GetterFunction } from './getter-function';
 import { CaseConvert } from '../local-utils/case-converter';
 

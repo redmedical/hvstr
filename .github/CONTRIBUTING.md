@@ -1,4 +1,4 @@
-# How to contribute to HVSTR
+# How to contribute to hvstr
 
 ## Have you found a bug or have a problem?
 * __Ensure the bug was not already reported__, by searching on GitHub under Issues.
@@ -24,4 +24,4 @@
 
 
 ## Do you have questions about the source code?
-* Ask any question about how to use HVSTR on our Gitter Channel.
+* Ask any question about how to use hvstr on our Gitter Channel.

@@ -1,4 +1,4 @@
-import { IE2eElement, Utils } from '@redmedical/HVSTR-utils';
+import { IE2eElement, Utils } from '@redmedical/hvstr-utils';
 import { browser } from 'protractor';
 
 export class BrowserApi {

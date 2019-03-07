@@ -3,7 +3,7 @@ Generating page-objects requires sometimes(or often) to proceed through several 
 
 For example: you have administrative page, but no initial entry's. But you need also the present elements, from the data less page. (For example a "No entry's" Message)
 
-Therefor HVSTR has the append method.
+Therefor hvstr has the append method.
 
 ## Append
 On every generated page-object you have several helper methods at generating time.
@@ -29,7 +29,7 @@ In this example the 'UserPage' gets opened and a page-object is generated. The g
 
 
 ## AppendChild
-Many pages have a complex structure, so the page-objects can become confusing and messy. Therefor HVSTR has a solution to build complex pages with a compositional structure. With ```appendChild``` you can composite a new part to the page-object.  
+Many pages have a complex structure, so the page-objects can become confusing and messy. Therefor hvstr has a solution to build complex pages with a compositional structure. With ```appendChild``` you can composite a new part to the page-object.  
 AppendChild expects a
 [```IGenerationInstruction```](../api/core/interfaces/igenerationinstruction.html).
 In the instruct, with the

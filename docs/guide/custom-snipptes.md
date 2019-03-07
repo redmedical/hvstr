@@ -1,5 +1,5 @@
 # Custom Snippets
-Assumed that you need a custom function for your elements, HVSTR has the custom snippets feature.
+Assumed that you need a custom function for your elements, hvstr has the custom snippets feature.
 It allows you to add code to the page-object generation process, which will be added,
 if a given condition is true.
 

@@ -1,17 +1,17 @@
 {
-  "name": "@redmedical/HVSTR-core",
+  "name": "@redmedical/hvstr-core",
   "version": "1.0.0",
   "main": "dist/index",
   "types": "dist/index",
   "scripts": {
     "build": "tsc -p .",
     "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
-    "typedoc": "node node_modules/typedoc/bin/typedoc --out ../docs/api/core --module commonjs --mode file --target es6 --readme none --name \"HVSTR-core API Documentation\" --tsconfig ./tsconfig.json --ignoreCompilerErrors ./src/",
+    "typedoc": "node node_modules/typedoc/bin/typedoc --out ../docs/api/core --module commonjs --mode file --target es6 --readme none --name \"hvstr-core API Documentation\" --tsconfig ./tsconfig.json --ignoreCompilerErrors ./src/",
     "test": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json",
     "coverage": "ts-node node_modules/nyc/bin/nyc.js npm rum test"
   },
   "dependencies": {
-    "@redmedical/HVSTR-utils": "file:../utils",
+    "@redmedical/hvstr-utils": "file:../utils",
     "mkdirp": "^0.5.1",
     "protractor": "~5.1.2",
     "require-from-string": "^2.0.2",
