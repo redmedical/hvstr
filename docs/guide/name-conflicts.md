@@ -1,5 +1,5 @@
 # Name Conflicts
-If you are reusing components more than just once on a page, the chances are high that two elements have the same e2e-id. Therefor HVSTR has a strategy to resolve these Issues. This page explains how:
+If you are reusing components more than just once on a page, the chances are high that two elements have the same e2e-id. Therefor hvstr has a strategy to resolve these Issues. This page explains how:
 
 Through the DOM all elements have a logical tree structure.
 First of all, this tree gets proceeded reclusively and all e2e-id's get stored in a binomial tree. This tree detects all names, a name-conflict exists for and stores these conflicts, with all its elements in a list.

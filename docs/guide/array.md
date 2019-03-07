@@ -1,5 +1,5 @@
 # Array-like recurring elements
-Sometimes it is necessary, to have repeated elements. For example, when you have lists or tables. Therefore, you can tell HVSTR that an element can be or is recurring. Just put some 'Array' braces (```[]```) at the end of the if from the recurring element.
+Sometimes it is necessary, to have repeated elements. For example, when you have lists or tables. Therefore, you can tell hvstr that an element can be or is recurring. Just put some 'Array' braces (```[]```) at the end of the if from the recurring element.
 
 ## Example
 ```html
@@ -27,7 +27,7 @@ getListItem(): ElementArrayFinder {
 ```
 
 ## Child elements from array-likes
-In the Dom, subordinated elements, from a recurring element don't need to be tagged as recurring elements. HVSTR will detect, that these elements can recur as a child from array-likes and will add an index parameter to the element get function.
+In the Dom, subordinated elements, from a recurring element don't need to be tagged as recurring elements. hvstr will detect, that these elements can recur as a child from array-likes and will add an index parameter to the element get function.
 
 ```html
 <ul>
@@ -38,7 +38,7 @@ In the Dom, subordinated elements, from a recurring element don't need to be tag
     </li>
 </ul>
 ```
-In this example, HVSTR will generate an element get function with an index parameter for the list-item-label.:
+In this example, hvstr will generate an element get function with an index parameter for the list-item-label.:
 
 ```ts
 getListItem(): ElementArrayFinder {
@@ -51,7 +51,7 @@ getListItemLabel(listItemIndex: number): ElementFinder {
 ```
 
 ## Recurring elements on several levels
-HVSTR supports multiple layers of recurring elements. For example, a table has it's rows as a level of recurring elements and it's columns. In this case, you have to tag each layer of recurring elements as an array-like. For each layer child element get functions will get a new parameter, to select the index of the recurring element.
+hvstr supports multiple layers of recurring elements. For example, a table has it's rows as a level of recurring elements and it's columns. In this case, you have to tag each layer of recurring elements as an array-like. For each layer child element get functions will get a new parameter, to select the index of the recurring element.
 
 ```html
 <table>

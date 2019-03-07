@@ -1,7 +1,6 @@
-import { Utils } from '@redmedical/HVSTR-utils';
+import { Utils } from '@redmedical/hvstr-utils';
 import { E2eElement } from '../e2e-element/e2e-element';
 import { QueuedCodeBuilder } from './code-builder/queued-code-builder';
-import { getParameterNameForElement, GetterFunction } from '../e2e-element/getter-function';
 import { IChildPage } from '../page-object/child-page';
 import { Path } from '../local-utils/path';
 import { CustomSnippets } from './element-function-custom-snippet';

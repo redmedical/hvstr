@@ -1,6 +1,6 @@
 import { E2eElement } from '../e2e-element/e2e-element';
 import { QueuedCodeBuilder } from './code-builder/queued-code-builder';
-import { Utils } from '@redmedical/HVSTR-utils';
+import { Utils } from '@redmedical/hvstr-utils';
 import { CaseConvert } from '../local-utils/case-converter';
 import { GetterFunction, getParameterNameForElement } from '../e2e-element/getter-function';
 

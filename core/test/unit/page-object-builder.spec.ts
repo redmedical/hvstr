@@ -1,5 +1,5 @@
 import { PageObjectBuilder, BrowserApi, IPageObjectInFabrication, IGenerationInstruction } from '../../src';
-import { ISimpleE2EElement } from '@redmedical/HVSTR-utils';
+import { ISimpleE2EElement } from '@redmedical/hvstr-utils';
 import * as elementTreeMerge from '../../src/lib/e2e-element/element-tree-merge';
 import { E2eElement } from '../../src/lib/e2e-element/e2e-element';
 import * as mergeDuplicateArrayElements from '../../src/lib/conflict-resolver/array-duplicate-merge';

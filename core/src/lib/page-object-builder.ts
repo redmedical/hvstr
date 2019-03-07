@@ -94,7 +94,7 @@ export class PageObjectBuilder {
              */
             waitForAngularEnabled?: boolean,
             /**
-             * Forbid HVSTR to create default page object directory's.
+             * Forbid hvstr to create default page object directory's.
              *
              * @type {boolean}
              */

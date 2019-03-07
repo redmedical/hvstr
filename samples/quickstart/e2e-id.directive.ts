@@ -1,5 +1,5 @@
 import { Directive, Input, OnInit, OnDestroy, ElementRef } from '@angular/core';
-import { IdCollector } from '@redmedical/HVSTR-client';
+import { IdCollector } from '@redmedical/hvstr-client';
 import { environment } from './environments/environment'; // Adapt environment here
 
 @Directive({

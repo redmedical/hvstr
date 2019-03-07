@@ -1,12 +1,12 @@
 {
-  "name": "@redmedical/HVSTR-utils",
+  "name": "@redmedical/hvstr-utils",
   "version": "1.0.0",
   "main": "dist/index",
   "types": "dist/index",
   "scripts": {
     "build": "tsc -p .",
     "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
-    "typedoc": "node node_modules/typedoc/bin/typedoc --out ../docs/api/utils --module commonjs --mode file --target es6 --readme none --name \"HVSTR-utils API Documentation\" --tsconfig ./tsconfig.json --ignoreCompilerErrors ./src/"
+    "typedoc": "node node_modules/typedoc/bin/typedoc --out ../docs/api/utils --module commonjs --mode file --target es6 --readme none --name \"hvstr-utils API Documentation\" --tsconfig ./tsconfig.json --ignoreCompilerErrors ./src/"
   },
   "devDependencies": {
     "typescript": "^3.0.3",

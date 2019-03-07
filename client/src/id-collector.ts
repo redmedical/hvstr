@@ -1,4 +1,4 @@
-import { IE2eElement, Utils } from '@redmedical/HVSTR-utils';
+import { IE2eElement, Utils } from '@redmedical/hvstr-utils';
 
 /**
  * The IdCollector is responsible to collect and prepare the elements, from which the page-objects will be generated, in the application context.

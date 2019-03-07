@@ -1,4 +1,4 @@
-import { Utils } from '@redmedical/HVSTR-utils';
+import { Utils } from '@redmedical/hvstr-utils';
 
 /**
  * @private
