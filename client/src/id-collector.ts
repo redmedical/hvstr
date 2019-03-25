@@ -48,33 +48,36 @@ export class IdCollector {
      * @param {Element} nativeElement
      * @param {string} id
      * @memberof IdCollector
+     * @returns the unique handle, which is needed to remove the item.
      */
-    public static add(nativeElement: Element, id: string): void {
+    public static add(nativeElement: Element, id: string): string {
         if (!IdCollector.isInitialized) {
             throw `IdCollector not initialized. Run 'IdCollector.init()' first!`;
         }
         if (!id.match(Utils.isValidKebabId)) {
             throw `Id ${id} does not match pattern ${Utils.isValidKebabId.toString()}`
         }
+        const uid: string = String(IdCollector.uidCounter);
+        IdCollector.uidCounter++;
         const type = nativeElement.tagName;
         nativeElement.className += ' ' + Utils.getCssClassFromKebabId(id);
-        IdCollector.allE2EIds.push({ uid: String(IdCollector.uidCounter), id, type, nativeElement, parent: undefined, children: [] });
-        IdCollector.addParentRecursiveForEachChild(nativeElement, String(IdCollector.uidCounter));
-        IdCollector.uidCounter++;
+        IdCollector.allE2EIds.push({ uid, id, type, nativeElement, parent: undefined, children: [] });
+        IdCollector.addParentRecursiveForEachChild(nativeElement, uid);
+        return uid;
     }
 
     /**
      * Removes a element from the IdCollector.
      *
      * @static
-     * @param {string} id
+     * @param {string} uid The handle returned by the ```add``` method, of the element to remove.
      * @memberof IdCollector
      */
-    public static remove(id: string): void {
+    public static remove(uid: string): void {
         if (!IdCollector.isInitialized) {
             throw `IdCollector not initialized. Run 'IdCollector.init()' first!`;
         }
-        IdCollector.allE2EIds = IdCollector.allE2EIds.filter(x => x.id !== id);
+        IdCollector.allE2EIds = IdCollector.allE2EIds.filter(x => x.uid !== uid);
     }
 
     private static addParents(): void {
