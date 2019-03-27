@@ -6,6 +6,7 @@ interface testCase {
     oldTree: TreeExpression[];
     addendTree: TreeExpression[];
     expectedTree: TreeExpression[];
+    focused?: boolean;
 }
 
 describe('elementTreeMerge', () => {
@@ -51,13 +52,13 @@ describe('elementTreeMerge', () => {
             oldTree: [{ e: [{ d: [{ a: [] }] }] }],
             addendTree: [{ f: [{ d: [{ b: [] }] }] }],
             expectedTree: [{ e: [{ d: [{ a: [] }] }] }, { f: [{ d: [{ b: [] }] }] }],
-        },
+        }
     ]).forEach(testCase => {
-        it(testCase.name, () => {
+        (testCase.focused ? fit : it)(testCase.name, () => {
             const oldTree = treeExpressionToE2eElement(testCase.oldTree);
             const newTree = treeExpressionToE2eElement(testCase.addendTree);
             const resultTree = treeExpressionToE2eElement(testCase.expectedTree);
-            const result = elementTreeMerge(oldTree, newTree, [], false);
+            const result = elementTreeMerge(oldTree, newTree);
             expect(result).toEqualE2eElementTree(resultTree);
         });
     });

@@ -66,13 +66,18 @@ export function initCustomSnippet(): CustomSnippets {
         .join(', ');
 
       codeBuilder
-        .addLine(
-          `${functionName}(${parameterString}): ${functionReturnType} {`
+        .addConditionalLine(
+          `${functionName}(${parameterString}): ${functionReturnType} {`,
+          !element.isPrivate
+        )
+        .addConditionalLine(
+          `private ${functionName}(${parameterString}): ${functionReturnType} {`,
+          element.isPrivate
         )
         .increaseDepth()
         .addLine(
           `return ${selectorSource}(by.css('.${Utils.getCssClassFromKebabId(
-            CaseConvert.fromPascal.toKebab(element.id)
+            CaseConvert.fromPascal.toKebab(element.pureId)
           )}'));`
         )
         .decreaseDepth()

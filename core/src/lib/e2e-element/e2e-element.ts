@@ -7,11 +7,12 @@ import { CaseConvert } from '../local-utils/case-converter';
  */
 export class E2eElement {
     public idInput: string;
-    public conflictFreeId: string;
+    private _conflictFreeId: string | undefined;
     public parentElement?: E2eElement;
     public type: string;
     public children: E2eElement[];
     public getterFunction: GetterFunction | undefined;
+    public isPrivate: boolean = false;
 
     constructor(
         data: ISimpleE2EElement,
@@ -19,7 +20,6 @@ export class E2eElement {
     ){
         this.idInput = data.id;
         this.type = data.type;
-        this.conflictFreeId = this.id;
         this.children = data.children.map(x => new E2eElement(x, this));
         this.parentElement = parent;
     }
@@ -28,16 +28,32 @@ export class E2eElement {
         return Boolean(this.id.match(Utils.isCamelArrayId));
     }
 
+    public set conflictFreeId(value: string) {
+        this._conflictFreeId = value;
+    }
+
+    public get conflictFreeId(): string {
+        if (this.isPrivate) {
+            return this._conflictFreeId ? '_' + this._conflictFreeId : this.id;
+        } else {
+            return this._conflictFreeId || this.id;
+        }
+    }
+
     public get id(): string {
-        return CaseConvert.fromKebab.toPascal(this.idInput);
+        if(this.isPrivate) {
+            return '_' + CaseConvert.fromKebab.toPascal(this.idInput);
+        } else {
+            return CaseConvert.fromKebab.toPascal(this.idInput);
+        }
     }
 
     public get pureId(): string {
-        const isCamelArrayId = this.id.match(Utils.isCamelArrayId);
-        let idResult = this.id;
+        let id = CaseConvert.fromKebab.toPascal(this.idInput);
+        const isCamelArrayId = id.match(Utils.isCamelArrayId);
         if (isCamelArrayId) {
-          idResult = idResult.substr(0, idResult.length - 2);
+          id = id.substr(0, id.length - 2);
         }
-        return idResult;
+        return id;
     }
 }

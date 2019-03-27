@@ -30,7 +30,7 @@ function mergeArrayDuplicateForTreePartition(tree: E2eElement[], i: number, arra
     const oldTree = tree[i].children;
     const addendTree = tree[arrayDuplicateIndex].children;
     const parent = tree[i];
-    tree[i].children = elementTreeMerge(oldTree, addendTree, [], false, undefined, parent);
+    tree[i].children = elementTreeMerge(oldTree, addendTree, parent);
 }
 
 /**

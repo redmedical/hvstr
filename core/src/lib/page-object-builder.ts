@@ -14,6 +14,7 @@ import { mergeDuplicateArrayElements } from './conflict-resolver/array-duplicate
 import { IChildPage } from './page-object/child-page';
 import { Awaiter } from './local-utils/types';
 import { initCustomSnippet, CustomSnippets } from './code-generation/element-function-custom-snippet';
+import { E2eElementTree } from './e2e-element/e2e-element-tree';
 
 /**
  * Contains all important interfaces to generate page-objects.
@@ -102,7 +103,7 @@ export class PageObjectBuilder {
         }
     ) {
         this.codeBuilder = params.codeBuilder || new QueuedCodeBuilder('  ');
-        this.awaiter = params.awaiter || (async () => {});
+        this.awaiter = params.awaiter || (async () => { });
         this.waitForAngularEnabled = params.waitForAngularEnabled === undefined ? true : params.waitForAngularEnabled;
         this.packagePath = new ProjectPathUtil(process.cwd(), params.e2eTestPath || '/e2e');
         if (!params.doNotCreateDirectorys) {
@@ -129,21 +130,15 @@ export class PageObjectBuilder {
             throw new Error('a new page object needs an name!');
         }
         await this.executeByPreparer(instruct, origin);
-        const newTree: E2eElement[] = (await BrowserApi.getE2eElementTree()).map(x => new E2eElement(x));
-        const e2eElementTree: E2eElement[] = elementTreeMerge(
-            [],
-            newTree,
-            instruct.excludeElements || [],
-            false,
-            instruct.restrictToElements
-        );
-        mergeDuplicateArrayElements(e2eElementTree);
-        ConflictResolver(e2eElementTree);
+        const newTree: E2eElementTree = new E2eElementTree(await BrowserApi.getE2eElementTree())
+            .restrict(instruct.excludeElements, instruct.restrictToElements)
+            .mergeDuplicateArrayElements()
+            .resolveConflicts();
         return await this.openAndGeneratePageObject({
             instruct,
             pageObjectName: instruct.name!,
             instructPath: instruct.path,
-            e2eElementTree,
+            e2eElementTree: newTree.tree,
             childPages: [],
             origin,
             hasFillForm: false
@@ -161,26 +156,21 @@ export class PageObjectBuilder {
      * @memberof PageObjectBuilder
      */
     public async append(instruct: IGenerationInstruction, scope: IPageObjectInFabrication): Promise<IPageObjectInFabrication> {
-        if(!instruct.path && scope.instruct.path) {
+        if (!instruct.path && scope.instruct.path) {
             // Append should not change Path on default
             instruct.path = scope.instruct.path;
         }
         await this.executeByPreparer(instruct, scope);
-        const newTree: E2eElement[] = (await BrowserApi.getE2eElementTree()).map(x => new E2eElement(x));
-        const e2eElementTree: E2eElement[] = elementTreeMerge(
-            scope.e2eElementTree,
-            newTree,
-            instruct.excludeElements || [],
-            false,
-            instruct.restrictToElements
-        );
-        mergeDuplicateArrayElements(e2eElementTree);
-        ConflictResolver(e2eElementTree);
+        const newTree: E2eElementTree = new E2eElementTree(await BrowserApi.getE2eElementTree())
+            .restrict(instruct.excludeElements, instruct.restrictToElements)
+            .mergeTo(scope.e2eElementTree)
+            .mergeDuplicateArrayElements()
+            .resolveConflicts();
         return await this.openAndGeneratePageObject({
             instruct,
             pageObjectName: scope.name,
             instructPath: scope.instruct.path,
-            e2eElementTree: e2eElementTree,
+            e2eElementTree: newTree.tree,
             childPages: scope.childPages,
             origin: scope,
             route: scope.route,
@@ -206,7 +196,7 @@ export class PageObjectBuilder {
             throw new Error('a new page object needs an name!');
         }
         const child: IPageObjectInFabrication = await this.generate(instruct, scope);
-        const childPages: IChildPage[] = [...scope.childPages, {name: instruct.name, pageObject: child}];
+        const childPages: IChildPage[] = [...scope.childPages, { name: instruct.name, pageObject: child }];
         const parent =
             await this.openAndGeneratePageObject({
                 instruct: this.getEmptyInstructFromOrigin(scope.instruct),
@@ -295,7 +285,7 @@ export class PageObjectBuilder {
             // it looks like waitForAngular resolves the promise immediately, because no Angular app
             await BrowserApi.awaitDocumentToBeReady();
             await BrowserApi.sleep(2000);
-            if (this.waitForAngularEnabled){
+            if (this.waitForAngularEnabled) {
                 await BrowserApi.waitForAngular();
             }
         }
@@ -343,7 +333,7 @@ export class PageObjectBuilder {
                     generatedExtendingPageObjectPath,
                     generatedPageObjectPath
                 );
-            if(!params.instruct.virtual) {
+            if (!params.instruct.virtual) {
                 this.writePageObject(generatedExtendingPageObject, generatedExtendingPageObjectPath);
             }
         }
