@@ -54,9 +54,9 @@ export class GeneratedPageObjectCodeGenerator {
 
     private addRoute(codeBuilder: QueuedCodeBuilder, route: string | undefined): GeneratedPageObjectCodeGenerator  {
         codeBuilder
-            .addLineCondition(``, Boolean(route))
-            .addLineCondition(`route = '${route}';`, Boolean(route))
-            .addLineCondition(``, Boolean(route));
+            .addConditionalLine(``, Boolean(route))
+            .addConditionalLine(`route = '${route}';`, Boolean(route))
+            .addConditionalLine(``, Boolean(route));
         return this;
     }
 
@@ -67,7 +67,7 @@ export class GeneratedPageObjectCodeGenerator {
     }
 
     private addNavigateTo(codeBuilder: QueuedCodeBuilder, route: string | undefined): GeneratedPageObjectCodeGenerator {
-        codeBuilder.addLineCondition(`navigateTo = () => browser.get(this.route);`, Boolean(route));
+        codeBuilder.addConditionalLine(`navigateTo = () => browser.get(this.route);`, Boolean(route));
         return this;
     }
 

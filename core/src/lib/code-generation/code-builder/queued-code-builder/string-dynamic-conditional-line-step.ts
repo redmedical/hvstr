@@ -4,10 +4,10 @@ import { IQueueStep } from './queue-step';
 /**
  * @private
  */
-export class StringLineConditionStep implements IQueueStep {
-    constructor(private value: string, private condition: boolean){}
+export class StringDynamicConditionalLineStep implements IQueueStep {
+    constructor(private value: string, private conditionCreator: () => boolean){}
     execute(codeBuilder: CodeBuilder): void {
-        if(this.condition) {
+        if(this.conditionCreator()){
             codeBuilder.addLine(this.value);
         }
     }

@@ -58,12 +58,12 @@ describe('QueuedCodeBuilder', () => {
     });
 
     it('should add conditional line', () => {
-        cb.addLineCondition('I am a line', true);
+        cb.addConditionalLine('I am a line', true);
         expect(cb.getResult()).toEqual('I am a line\n');
     });
 
     it('should not add conditional line', () => {
-        cb.addLineCondition('I am a line', false);
+        cb.addConditionalLine('I am a line', false);
         expect(cb.getResult()).toEqual('');
     });
 

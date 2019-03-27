@@ -1,8 +1,8 @@
 import { CodeBuilder } from './code-builder';
 import { IQueueStep } from './queued-code-builder/queue-step';
 import { StringLineStep } from './queued-code-builder/string-line-step';
-import { StringLineConditionStep } from './queued-code-builder/string-line-condition-step';
-import { StringLineDynamicConditionStep } from './queued-code-builder/string-line-dynamic-condition-step';
+import { StringConditionalLineStep } from './queued-code-builder/string-condition-line-step';
+import { StringDynamicConditionalLineStep } from './queued-code-builder/string-dynamic-conditional-line-step';
 import { DynamicStringLineStep } from './queued-code-builder/dynamic-string-line-step';
 import { IncreaseDepthStep } from './queued-code-builder/increase-depth-step';
 import { DecreaseDepthStep } from './queued-code-builder/decrease-depth-step';
@@ -67,8 +67,8 @@ export class QueuedCodeBuilder{
      * @returns {QueuedCodeBuilder}
      * @memberof QueuedCodeBuilder
      */
-    addLineCondition(content: string, condition: boolean): QueuedCodeBuilder {
-        this.queue.push(new StringLineConditionStep(content, condition));
+    addConditionalLine(content: string, condition: boolean): QueuedCodeBuilder {
+        this.queue.push(new StringConditionalLineStep(content, condition));
         return this;
     }
 
@@ -84,8 +84,8 @@ export class QueuedCodeBuilder{
      * @returns {QueuedCodeBuilder}
      * @memberof QueuedCodeBuilder
      */
-    addLineDynamicCondition(content: string, condition: () => boolean): QueuedCodeBuilder {
-        this.queue.push(new StringLineDynamicConditionStep(content, condition));
+    addDynamicConditionalLine(content: string, condition: () => boolean): QueuedCodeBuilder {
+        this.queue.push(new StringDynamicConditionalLineStep(content, condition));
         return this;
     }
 
