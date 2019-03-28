@@ -2,7 +2,7 @@ const { config } = require('./protractor.conf'); // <- your Protractor config
 
 exports.config = {
     ...config,
-    async beforeLaunch() {
+    async onPrepare() {
         if (config.beforeLaunch) {
             await config.beforeLaunch();
         }

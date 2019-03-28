@@ -56,6 +56,8 @@ hvstr is an open source page object generator for [protractor](http://protractor
 5. Now you can add your hvstr script, to generate your page objects:
 
     Use the [Example](./samples/quickstart/main.hvstr.ts) and begin to generate your page objects.
+    
+    Adapt the path in the ```hvstr.conf.js``` to your hvstr script (the ```main.hvstr.ts``` for example).
 
     ### Add your first page object
     First of all you need to mark every element/component in your application, which should be added to the page object. You can do this by tagging these elements with our (in step 3) created IDCollector directive:
@@ -95,7 +97,7 @@ Take a look at our [contributing guidelines](./.github/CONTRIBUTING.md)
 
 ## Documentation
 
-See [GitHub wiki](https://github.com/redmedical/hvstr/wiki)
+See [Docs](https://github.com/redmedical/hvstr/tree/master/docs/api)
 
 
 ## License

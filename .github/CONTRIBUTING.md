@@ -21,7 +21,3 @@
     * shared - for changes at the shared module
     * config - for changes at configuration files
     * \* - for other changes
-
-
-## Do you have questions about the source code?
-* Ask any question about how to use hvstr on our Gitter Channel.
