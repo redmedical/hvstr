@@ -1,5 +1,5 @@
 import { PageObjectBuilder, BrowserApi, IPageObjectInFabrication, IGenerationInstruction } from '../../src';
-import { ISimpleE2EElement } from '@redmedical/hvstr-utils';
+import { ISimpleE2EElement, IE2eElement } from '@redmedical/hvstr-utils';
 import * as elementTreeMerge from '../../src/lib/e2e-element/element-tree-merge';
 import { E2eElement } from '../../src/lib/e2e-element/e2e-element';
 import * as mergeDuplicateArrayElements from '../../src/lib/conflict-resolver/array-duplicate-merge';
@@ -8,7 +8,7 @@ import * as ConflictResolver from '../../src/lib/conflict-resolver/conflict-reso
 describe('PageObjectBuilder', () => {
 
     describe('generate', () => {
-        const resultObject = {};
+        const resultObject = <IPageObjectInFabrication>{};
         let pageObjectBuilder: PageObjectBuilder;
         let executeByPreparerSpy: jasmine.Spy;
         let BrowserApiSpy: jasmine.Spy;
@@ -18,10 +18,10 @@ describe('PageObjectBuilder', () => {
         let openAndGeneratePageObjectSpy: jasmine.Spy;
         let browserWaitForAngularEnabledSpy: jasmine.Spy;
         let awaiterSpy: jasmine.Spy;
-        let iE2eElementMock: ISimpleE2EElement[];
+        let iE2eElementMock: IE2eElement[];
 
         beforeEach(async () => {
-            iE2eElementMock = <ISimpleE2EElement[]>[
+            iE2eElementMock = <IE2eElement[]><ISimpleE2EElement[]>[ // not all entity's of IE2eElement are needed
                 {
                     id: 'A',
                     type: 'DIV',
@@ -30,7 +30,7 @@ describe('PageObjectBuilder', () => {
                 }
             ];
             awaiterSpy = jasmine.createSpy('awaiter', () => { });
-            BrowserApiSpy = spyOn(BrowserApi, 'getE2eElementTree').and.returnValue(iE2eElementMock);
+            BrowserApiSpy = spyOn(BrowserApi, 'getE2eElementTree').and.returnValue(new Promise(resolve => resolve(iE2eElementMock)));
             elementTreeMergeSpy = spyOn(elementTreeMerge, 'elementTreeMerge').and.callFake(
                 (oldTree: E2eElement[],
                     addendTree: E2eElement[],
@@ -112,7 +112,7 @@ describe('PageObjectBuilder', () => {
     });
 
     describe('append', () => {
-        const resultObject = {};
+        const resultObject = <IPageObjectInFabrication>{};
         let scopeMock: any;
         let pageObjectBuilder: PageObjectBuilder;
         let executeByPreparerSpy: jasmine.Spy;
@@ -123,7 +123,7 @@ describe('PageObjectBuilder', () => {
         let openAndGeneratePageObjectSpy: jasmine.Spy;
         let browserWaitForAngularEnabledSpy: jasmine.Spy;
         let awaiterSpy: jasmine.Spy;
-        let iE2eElementMock: ISimpleE2EElement[];
+        let iE2eElementMock: IE2eElement[];
         let callInstruct: {byRoute: string;};
 
         beforeEach(async () => {
@@ -133,7 +133,7 @@ describe('PageObjectBuilder', () => {
             callInstruct = {
                 byRoute: '/home'
             };
-            iE2eElementMock = <ISimpleE2EElement[]>[
+            iE2eElementMock = <IE2eElement[]><ISimpleE2EElement[]>[ // not all entity's of IE2eElement are needed
                 {
                     id: 'A',
                     type: 'DIV',
@@ -142,7 +142,7 @@ describe('PageObjectBuilder', () => {
                 }
             ];
             awaiterSpy = jasmine.createSpy('awaiter', () => { });
-            BrowserApiSpy = spyOn(BrowserApi, 'getE2eElementTree').and.returnValue(iE2eElementMock);
+            BrowserApiSpy = spyOn(BrowserApi, 'getE2eElementTree').and.returnValue(new Promise(resolve => resolve(iE2eElementMock)));
             elementTreeMergeSpy = spyOn(elementTreeMerge, 'elementTreeMerge').and.callFake(
                 (oldTree: E2eElement[],
                     addendTree: E2eElement[],
@@ -198,7 +198,7 @@ describe('PageObjectBuilder', () => {
     });
 
     describe('appendChild', () => {
-        const resultObject = {};
+        const resultObject = <IPageObjectInFabrication>{};
         let scopeMock: any;
         let pageObjectBuilder: PageObjectBuilder;
         let generateSpy: jasmine.Spy;
@@ -283,7 +283,7 @@ describe('PageObjectBuilder', () => {
     });
 
     describe('addNavigateTo', () => {
-        const resultObject = {};
+        const resultObject = <IPageObjectInFabrication>{};
         let scopeMock: any;
         let pageObjectBuilder: PageObjectBuilder;
         let openAndGeneratePageObjectSpy: jasmine.Spy;
@@ -321,7 +321,7 @@ describe('PageObjectBuilder', () => {
     });
 
     describe('addFillForm', () => {
-        const resultObject = {};
+        const resultObject = <IPageObjectInFabrication>{};
         let scopeMock: any;
         let pageObjectBuilder: PageObjectBuilder;
         let openAndGeneratePageObjectSpy: jasmine.Spy;
