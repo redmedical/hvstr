@@ -55,7 +55,7 @@ export class IdCollector {
             throw `IdCollector not initialized. Run 'IdCollector.init()' first!`;
         }
         if (!id.match(Utils.isValidKebabId)) {
-            throw `Id ${id} does not match pattern ${Utils.isValidKebabId.toString()}`
+            throw `Id ${id} does not match pattern ${Utils.isValidKebabId.toString()}`;
         }
         const uid: string = String(IdCollector.uidCounter);
         IdCollector.uidCounter++;
