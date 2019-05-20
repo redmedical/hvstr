@@ -34,9 +34,6 @@ describe('PageObjectBuilder', () => {
             elementTreeMergeSpy = spyOn(elementTreeMerge, 'elementTreeMerge').and.callFake(
                 (oldTree: E2eElement[],
                     addendTree: E2eElement[],
-                    excludeElements: string[],
-                    isRestrictElementsChild: boolean,
-                    restrictToElements?: string[],
                     parent?: E2eElement) => addendTree
             );
             mergeDuplicateArrayElementsSpy = spyOn(mergeDuplicateArrayElements, 'mergeDuplicateArrayElements');
@@ -146,9 +143,6 @@ describe('PageObjectBuilder', () => {
             elementTreeMergeSpy = spyOn(elementTreeMerge, 'elementTreeMerge').and.callFake(
                 (oldTree: E2eElement[],
                     addendTree: E2eElement[],
-                    excludeElements: string[],
-                    isRestrictElementsChild: boolean,
-                    restrictToElements?: string[],
                     parent?: E2eElement) => addendTree
             );
             mergeDuplicateArrayElementsSpy = spyOn(mergeDuplicateArrayElements, 'mergeDuplicateArrayElements');

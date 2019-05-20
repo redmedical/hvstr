@@ -15,9 +15,9 @@ export class E2eElementTree {
     }
     mergeTo(mergeRoot: E2eElementTree | E2eElement[], parent?: E2eElement): E2eElementTree {
         if (mergeRoot instanceof E2eElementTree) {
-            this.tree = elementTreeMerge(mergeRoot.tree, this.tree, parent)
+            this.tree = elementTreeMerge(mergeRoot.tree, this.tree, parent);
         } else {
-            this.tree = elementTreeMerge(mergeRoot, this.tree, parent)
+            this.tree = elementTreeMerge(mergeRoot, this.tree, parent);
         }
         return this;
     }
