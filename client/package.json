@@ -12,9 +12,9 @@
     "@redmedical/hvstr-utils": "1.0.0"
   },
   "devDependencies": {
-    "typescript": "^3.0.3",
-    "tslint": "~5.9.1",
-    "typedoc": "^0.14.0"
+      "tslint": "^5.16.0",
+      "typedoc": "^0.14.2",
+      "typescript": "^3.5.2"
   },
   "publishConfig": {
     "access": "public"
