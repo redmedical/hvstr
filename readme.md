@@ -1,5 +1,8 @@
 # hvstr
 
+[![Master Build Status](https://travis-ci.org/redmedical/hvstr.svg?branch=master)](https://travis-ci.org/redmedical/hvstr)
+[![Develop Build Status](https://travis-ci.org/redmedical/hvstr.svg?branch=develop)](https://travis-ci.org/redmedical/hvstr)
+
 hvstr is an open source page object generator for [protractor](http://protractortest.org/). With hvstr, you'll never have to write annoying page objects again. Just place some `e2e` attributes in your project, tell hvstr how to reach your page and it will generate the page objects for you.
 
 

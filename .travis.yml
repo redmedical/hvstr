@@ -1,32 +1,67 @@
 language: node_js
 node_js:
   - 10.12.0
-script:
-  - cd utils
-  - npm i
-  - npm run build
-  - npm run lint
-  - cd ../client
-  - npm i ../utils
-  - npm i
-  - npm run build
-  - npm run lint
-  - cd ../core
-  - npm i ../utils
-  - npm i
-  - npm run build
-  - npm run lint
-  - npm run coverage
-  - cd ..
 
-# before_deploy:
-#   - echo "" > .gitignore
-
-# deploy:
-#   provider: npm
-#   email: NPM_EMAIL
-#   api_key: NPM_KEY
-#   skip_cleanup: true
-#   on:
-#     tags: true
-#     branch: master
+jobs:
+  include:
+    - stage: Build
+      script:
+        - cd utils
+        - npm i
+        - npm run build
+        - npm run lint
+        - cd ../client
+        - npm i ../utils
+        - npm i
+        - npm run build
+        - npm run lint
+        - cd ../core
+        - npm i ../utils
+        - npm i
+        - npm run build
+        - npm run lint
+        - npm run coverage
+    - stage: Utils-Release
+      script:
+        - cd utils
+        - npm i
+        - npm run build
+      after_deploy:
+      deploy:
+          provider: npm
+          email: '$NPM_EMAIL'
+          api_key: '$NPM_TOKEN'
+          skip_cleanup: true
+          on:
+              tags: true
+              branch: master
+    - stage: Client-Release
+      script:
+        - cd client
+        - npm i
+        - npm run build
+      after_deploy:
+          - cd ..
+      deploy:
+          provider: npm
+          email: '$NPM_EMAIL'
+          api_key: '$NPM_TOKEN'
+          skip_cleanup: true
+          on:
+              tags: true
+              branch: master
+    - stage: Core-Release
+      script:
+        - cd core
+        - npm i
+        - npm run build
+      after_deploy:
+          - cd ..
+      deploy:
+          provider: npm
+          email: '$NPM_EMAIL'
+          api_key: '$NPM_TOKEN'
+          skip_cleanup: true
+          on:
+              tags: true
+              branch: master

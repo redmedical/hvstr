@@ -25,5 +25,8 @@
     "tslint": "~5.9.1",
     "typedoc": "^0.14.0",
     "typescript": "^3.0.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
