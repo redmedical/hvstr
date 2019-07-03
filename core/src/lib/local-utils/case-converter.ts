@@ -86,7 +86,7 @@ export class CaseConvert {
          * @memberof CaseConvert.fromCamel
          */
         toKebab: (input: string) => {
-            return input.replace(/[A-Z][a-z0-9]*/g, (part: string) => { return '-' + part.toLocaleLowerCase() });
+            return input.replace(/[A-Z][a-z0-9]*/g, (part: string) => { return '-' + part.toLocaleLowerCase(); });
         },
         /**
         * converts camelCase in PascalCase

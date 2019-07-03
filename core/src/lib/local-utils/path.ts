@@ -33,7 +33,7 @@ export class ProjectPathUtil {
             root = this.generatedPageObjects;
         }
         const fileName = CaseConvert.fromPascal.toKebab((isExtendingPageObject ? '' : 'Generated') + pageObjectName);
-        return new Path(root, instructPath || '', fileName, 'ts')
+        return new Path(root, instructPath || '', fileName, 'ts');
     }
 }
 
