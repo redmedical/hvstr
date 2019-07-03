@@ -11,7 +11,7 @@
     "coverage": "ts-node node_modules/nyc/bin/nyc.js npm rum test"
   },
   "dependencies": {
-    "@redmedical/hvstr-utils": "file:../utils",
+    "@redmedical/hvstr-utils": "1.0.0",
     "mkdirp": "^0.5.1",
     "protractor": "~5.1.2",
     "require-from-string": "^2.0.2",
