@@ -34,7 +34,7 @@ function excludeRecursive(tree: E2eElement[], excludeElements: string[]): E2eEle
     tree.forEach(x => {
         if (excludeElements.indexOf(x.id) === -1) {
             result.push(x);
-            x.children = excludeRecursive(x.children, excludeElements)
+            x.children = excludeRecursive(x.children, excludeElements);
         }
     });
     return result;

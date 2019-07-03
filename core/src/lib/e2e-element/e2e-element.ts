@@ -7,12 +7,12 @@ import { CaseConvert } from '../local-utils/case-converter';
  */
 export class E2eElement {
     public idInput: string;
-    private _conflictFreeId: string | undefined;
     public parentElement?: E2eElement;
     public type: string;
     public children: E2eElement[];
     public getterFunction: GetterFunction | undefined;
     public isPrivate: boolean = false;
+    private _conflictFreeId: string | undefined;
 
     constructor(
         data: ISimpleE2EElement,
@@ -20,7 +20,7 @@ export class E2eElement {
     ){
         this.idInput = data.id;
         this.type = data.type;
-        this.children = data.children.map(x => new E2eElement(x, this));
+        this.children = data.children.map((x: ISimpleE2EElement) => new E2eElement(x, this));
         this.parentElement = parent;
     }
 
