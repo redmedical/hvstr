@@ -24,6 +24,8 @@ jobs:
     - stage: Utils-Release
       script:
         - cd utils
+        - cp ../readme.md .
+        - cp ../LICENSE .
         - npm i
         - npm run build
       after_deploy:
@@ -38,6 +40,8 @@ jobs:
     - stage: Client-Release
       script:
         - cd client
+        - cp ../readme.md .
+        - cp ../LICENSE .
         - npm i
         - npm run build
       after_deploy:
@@ -53,6 +57,8 @@ jobs:
     - stage: Core-Release
       script:
         - cd core
+        - cp ../readme.md .
+        - cp ../LICENSE .
         - npm i
         - npm run build
       after_deploy:
