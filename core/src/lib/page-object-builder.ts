@@ -6,15 +6,14 @@ import { QueuedCodeBuilder } from './code-generation/code-builder/queued-code-bu
 import { ProjectPathUtil, Path } from './local-utils/path';
 import { ExtendingPageObjectCodeGenerator } from './code-generation/extending-page-object-code-generator';
 import { E2eElement } from './e2e-element/e2e-element';
-import { elementTreeMerge } from './e2e-element/element-tree-merge';
 import { IPageObjectInFabrication } from './page-object/page-object-in-fabrication';
 import { compilePageObject, requirePageObject } from './page-object/page-object-loader';
-import { ConflictResolver } from './conflict-resolver/conflict-resolver';
-import { mergeDuplicateArrayElements } from './conflict-resolver/array-duplicate-merge';
 import { IChildPage } from './page-object/child-page';
 import { Awaiter } from './local-utils/types';
 import { initCustomSnippet, CustomSnippets } from './code-generation/element-function-custom-snippet';
 import { E2eElementTree } from './e2e-element/e2e-element-tree';
+import { IPageObjectBuilderOptions, IPageObjectBuilderInputOptions } from './page-object-builder-options';
+import { defaults } from 'lodash';
 
 /**
  * Contains all important interfaces to generate page-objects.
@@ -31,86 +30,32 @@ export class PageObjectBuilder {
      * @memberof PageObjectBuilder
      */
     public customSnippets: CustomSnippets;
-    /**
-     * The codebuilder passed in the constructor or the default codebuilder
-     *
-     * @type {QueuedCodeBuilder}
-     * @memberof PageObjectBuilder
-     */
-    public codeBuilder: QueuedCodeBuilder;
-    /**
-     * In constructor defined, if waitForAngular should be enabled or not
-     *
-     * @type {boolean}
-     * @memberof PageObjectBuilder
-     */
-    public waitForAngularEnabled: boolean;
     packagePath: ProjectPathUtil;
-    /**
-     * In constructor defined awaiter
-     *
-     * @type {Awaiter}
-     * @memberof PageObjectBuilder
-     */
-    public awaiter: Awaiter;
+
+    private options: IPageObjectBuilderOptions = {
+        codeBuilder: new QueuedCodeBuilder('  '),
+        awaiter: (async () => { }),
+        waitForAngularEnabled: true,
+        e2eTestPath:  '/e2e',
+        doNotCreateDirectories: false,
+        enableCustomBrowser: false,
+    };
 
     /**
      * Creates an instance of PageObjectBuilder.
-     * @param {{
-     *             codeBuilder?: QueuedCodeBuilder,
-     *             awaiter?: Awaiter,
-     *             e2eTestPath?: string,
-     *             waitForAngularEnabled?: boolean,
-     *         }} params
+     * @param {IPageObjectBuilderOptions} options
      * @memberof PageObjectBuilder
      */
     constructor(
-        params: {
-            /**
-             * Defines the CodeBuilder. See more at QueuedCodeBuilder
-             *
-             * @type {QueuedCodeBuilder}
-             * @default new QueuedCodeBuilder('  ')
-             */
-            codeBuilder?: QueuedCodeBuilder,
-            /**
-             * Action that should be performed normally. See more at IGenerationInstruct
-             *
-             * @type {Awaiter}
-             * @default () => {}
-             */
-            awaiter?: Awaiter,
-            /**
-             * Defines the root-path, where the page-objects should be stored
-             *
-             * @type {string}
-             * @default '/e2e'
-             */
-            e2eTestPath?: string,
-            /**
-             * Defines if the protractor-setting WaitForAngular should be enabled or disabled.
-             *
-             * @type {boolean}
-             * @default true
-             */
-            waitForAngularEnabled?: boolean,
-            /**
-             * Forbid hvstr to create default page object directory's.
-             *
-             * @type {boolean}
-             */
-            doNotCreateDirectorys?: boolean,
-        }
+        options: IPageObjectBuilderInputOptions,
     ) {
-        this.codeBuilder = params.codeBuilder || new QueuedCodeBuilder('  ');
-        this.awaiter = params.awaiter || (async () => { });
-        this.waitForAngularEnabled = params.waitForAngularEnabled === undefined ? true : params.waitForAngularEnabled;
-        this.packagePath = new ProjectPathUtil(process.cwd(), params.e2eTestPath || '/e2e');
-        if (!params.doNotCreateDirectorys) {
+        this.options = defaults({...options}, this.options);
+        this.packagePath = new ProjectPathUtil(process.cwd(), this.options.e2eTestPath!);
+        if (!this.options.doNotCreateDirectories) {
             this.packagePath.createAllDirectories();
         }
         this.customSnippets = initCustomSnippet();
-        BrowserApi.setWaitForAngularEnabled(this.waitForAngularEnabled);
+        BrowserApi.setWaitForAngularEnabled(this.options.waitForAngularEnabled);
     }
 
     /**
@@ -273,7 +218,7 @@ export class PageObjectBuilder {
      * @private
      */
     async executeByPreparer(instruct: IGenerationInstruction, origin: IPageObjectInFabrication | undefined): Promise<void> {
-        const awaiter: Awaiter = instruct.awaiter || this.awaiter;
+        const awaiter: Awaiter = instruct.awaiter || this.options.awaiter;
         if (instruct.from) {
             await this.executeByPreparer(instruct.from.instruct, instruct.from.origin);
         } else if (origin) {
@@ -285,7 +230,7 @@ export class PageObjectBuilder {
             // it looks like waitForAngular resolves the promise immediately, because no Angular app
             await BrowserApi.awaitDocumentToBeReady();
             await BrowserApi.sleep(2000);
-            if (this.waitForAngularEnabled) {
+            if (this.options.waitForAngularEnabled) {
                 await BrowserApi.waitForAngular();
             }
         }
@@ -304,7 +249,7 @@ export class PageObjectBuilder {
      * @private
      */
     async openAndGeneratePageObject(params: IOpenAndGeneratePageObjectInstruct): Promise<IPageObjectInFabrication> {
-        const generateGeneratedPageObject: GeneratedPageObjectCodeGenerator = new GeneratedPageObjectCodeGenerator();
+        const generateGeneratedPageObject: GeneratedPageObjectCodeGenerator = new GeneratedPageObjectCodeGenerator(this.options);
         const generateExtendingPageObject: ExtendingPageObjectCodeGenerator = new ExtendingPageObjectCodeGenerator();
 
         const generatedPageObjectPath: Path = this.packagePath.getFilePath(params.pageObjectName, params.instructPath, false);
@@ -316,7 +261,7 @@ export class PageObjectBuilder {
                 generatedPageObjectPath,
                 elementTreeRoot: params.e2eElementTree,
                 childPages: params.childPages,
-                codeBuilder: this.codeBuilder!,
+                codeBuilder: this.options.codeBuilder!,
                 route: params.route,
                 hasFillForm: params.hasFillForm,
                 rules: this.customSnippets,
@@ -329,7 +274,7 @@ export class PageObjectBuilder {
             const generatedExtendingPageObject: string =
                 generateExtendingPageObject.generatePageObject(
                     params.pageObjectName,
-                    this.codeBuilder!,
+                    this.options.codeBuilder!,
                     generatedExtendingPageObjectPath,
                     generatedPageObjectPath
                 );
@@ -343,7 +288,7 @@ export class PageObjectBuilder {
                 pageName: params.pageObjectName,
                 elementTreeRoot: params.e2eElementTree,
                 childPages: [],
-                codeBuilder: this.codeBuilder!,
+                codeBuilder: this.options.codeBuilder!,
                 route: params.route,
                 hasFillForm: params.hasFillForm,
                 rules: this.customSnippets,
