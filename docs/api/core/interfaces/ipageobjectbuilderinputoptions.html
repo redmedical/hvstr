@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ISimpleE2EElement | hvstr-utils API Documentation</title>
+	<title>IPageObjectBuilderInputOptions | hvstr-core API Documentation</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">hvstr-utils API Documentation</a>
+					<a href="../index.html" class="title">hvstr-core API Documentation</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -56,10 +56,10 @@
 					<a href="../index.html">Globals</a>
 				</li>
 				<li>
-					<a href="isimplee2eelement.html">ISimpleE2EElement</a>
+					<a href="ipageobjectbuilderinputoptions.html">IPageObjectBuilderInputOptions</a>
 				</li>
 			</ul>
-			<h1>Interface ISimpleE2EElement</h1>
+			<h1>Interface IPageObjectBuilderInputOptions</h1>
 		</div>
 	</div>
 </header>
@@ -70,10 +70,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ISimpleE2EElement</span>
+						<span class="target">IPageObjectBuilderInputOptions</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<a href="ie2eelement.html" class="tsd-signature-type">IE2eElement</a>
+								<a href="ipageobjectbuilderoptions.html" class="tsd-signature-type">IPageObjectBuilderOptions</a>
 							</li>
 						</ul>
 					</li>
@@ -86,10 +86,12 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="isimplee2eelement.html#children" class="tsd-kind-icon">children</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="isimplee2eelement.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="isimplee2eelement.html#parent" class="tsd-kind-icon">parent</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="isimplee2eelement.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipageobjectbuilderinputoptions.html#awaiter" class="tsd-kind-icon">awaiter</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipageobjectbuilderinputoptions.html#codebuilder" class="tsd-kind-icon">code<wbr>Builder</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipageobjectbuilderinputoptions.html#donotcreatedirectories" class="tsd-kind-icon">do<wbr>Not<wbr>Create<wbr>Directories</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipageobjectbuilderinputoptions.html#e2etestpath" class="tsd-kind-icon">e2e<wbr>Test<wbr>Path</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipageobjectbuilderinputoptions.html#enablecustombrowser" class="tsd-kind-icon">enable<wbr>Custom<wbr>Browser</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipageobjectbuilderinputoptions.html#waitforangularenabled" class="tsd-kind-icon">wait<wbr>For<wbr>Angular<wbr>Enabled</a></li>
 							</ul>
 						</section>
 					</div>
@@ -98,44 +100,141 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="children" class="tsd-anchor"></a>
-					<h3>children</h3>
-					<div class="tsd-signature tsd-kind-icon">children<span class="tsd-signature-symbol">:</span> <a href="isimplee2eelement.html" class="tsd-signature-type">ISimpleE2EElement</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="awaiter" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> awaiter</h3>
+					<div class="tsd-signature tsd-kind-icon">awaiter<span class="tsd-signature-symbol">:</span> <a href="../index.html#awaiter" class="tsd-signature-type">Awaiter</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/redmedical/HVSTR/blob/fd9c85a/utils/src/e2e-element.ts#L17">e2e-element.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/redmedical/HVSTR/blob/fd9c85a/core/src/lib/page-object-builder-options.ts#L18">lib/page-object-builder-options.ts:18</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Action that should be performed normally. See more at IGenerationInstruct</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>type</dt>
+							<dd><p>{Awaiter}</p>
+							</dd>
+							<dt>default</dt>
+							<dd><p>() =&gt; {}</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="id" class="tsd-anchor"></a>
-					<h3>id</h3>
-					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="codebuilder" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> code<wbr>Builder</h3>
+					<div class="tsd-signature tsd-kind-icon">code<wbr>Builder<span class="tsd-signature-symbol">:</span> <a href="../classes/queuedcodebuilder.html" class="tsd-signature-type">QueuedCodeBuilder</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/redmedical/HVSTR/blob/fd9c85a/utils/src/e2e-element.ts#L14">e2e-element.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/redmedical/HVSTR/blob/fd9c85a/core/src/lib/page-object-builder-options.ts#L11">lib/page-object-builder-options.ts:11</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Defines the CodeBuilder. See more at QueuedCodeBuilder</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>type</dt>
+							<dd><p>{QueuedCodeBuilder}</p>
+							</dd>
+							<dt>default</dt>
+							<dd><p>new QueuedCodeBuilder(&#39;  &#39;)</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="parent" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> parent</h3>
-					<div class="tsd-signature tsd-kind-icon">parent<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<a name="donotcreatedirectories" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> do<wbr>Not<wbr>Create<wbr>Directories</h3>
+					<div class="tsd-signature tsd-kind-icon">do<wbr>Not<wbr>Create<wbr>Directories<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/redmedical/HVSTR/blob/fd9c85a/utils/src/e2e-element.ts#L15">e2e-element.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/redmedical/HVSTR/blob/fd9c85a/core/src/lib/page-object-builder-options.ts#L38">lib/page-object-builder-options.ts:38</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Prevent hvstr from creating default page object directories.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>type</dt>
+							<dd><p>{boolean}</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="type" class="tsd-anchor"></a>
-					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="e2etestpath" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> e2e<wbr>Test<wbr>Path</h3>
+					<div class="tsd-signature tsd-kind-icon">e2e<wbr>Test<wbr>Path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/redmedical/HVSTR/blob/fd9c85a/utils/src/e2e-element.ts#L16">e2e-element.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/redmedical/HVSTR/blob/fd9c85a/core/src/lib/page-object-builder-options.ts#L25">lib/page-object-builder-options.ts:25</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Defines the root-path, where the page-objects should be stored</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>type</dt>
+							<dd><p>{string}</p>
+							</dd>
+							<dt>default</dt>
+							<dd><p>&#39;/e2e&#39;</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="enablecustombrowser" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> enable<wbr>Custom<wbr>Browser</h3>
+					<div class="tsd-signature tsd-kind-icon">enable<wbr>Custom<wbr>Browser<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/redmedical/HVSTR/blob/fd9c85a/core/src/lib/page-object-builder-options.ts#L52">lib/page-object-builder-options.ts:52</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Add browser parameter to page-objects constructor, to enable support of forked browser instances.
+							(<a href="https://www.protractortest.org/#/api?view=ProtractorBrowser.prototype.forkNewDriverInstance">browser.forkNewDriverInstance</a>)</p>
+						</div>
+						<p>the page-objects constructor will look something like this.:</p>
+						<pre><code class="language-ts"><span class="hljs-keyword">constructor</span>(<span class="hljs-params">
+    browser?: ProtractorBrowser = browser
+</span>){}</code></pre>
+						<dl class="tsd-comment-tags">
+							<dt>type</dt>
+							<dd><p>{boolean}</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="waitforangularenabled" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> wait<wbr>For<wbr>Angular<wbr>Enabled</h3>
+					<div class="tsd-signature tsd-kind-icon">wait<wbr>For<wbr>Angular<wbr>Enabled<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/redmedical/HVSTR/blob/fd9c85a/core/src/lib/page-object-builder-options.ts#L32">lib/page-object-builder-options.ts:32</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Defines if the protractor-setting WaitForAngular should be enabled or disabled.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>type</dt>
+							<dd><p>{boolean}</p>
+							</dd>
+							<dt>default</dt>
+							<dd><p>true</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -149,28 +248,28 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class">
-						<a href="../classes/utils.html" class="tsd-kind-icon">Utils</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-is-private">
-						<a href="ie2eelement.html" class="tsd-kind-icon">IE2e<wbr>Element</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="isimplee2eelement.html" class="tsd-kind-icon">ISimple<wbr>E2EElement</a>
+						<a href="ipageobjectbuilderinputoptions.html" class="tsd-kind-icon">IPage<wbr>Object<wbr>Builder<wbr>Input<wbr>Options</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="isimplee2eelement.html#children" class="tsd-kind-icon">children</a>
+								<a href="ipageobjectbuilderinputoptions.html#awaiter" class="tsd-kind-icon">awaiter</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="isimplee2eelement.html#id" class="tsd-kind-icon">id</a>
+								<a href="ipageobjectbuilderinputoptions.html#codebuilder" class="tsd-kind-icon">code<wbr>Builder</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="isimplee2eelement.html#parent" class="tsd-kind-icon">parent</a>
+								<a href="ipageobjectbuilderinputoptions.html#donotcreatedirectories" class="tsd-kind-icon">do<wbr>Not<wbr>Create<wbr>Directories</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="isimplee2eelement.html#type" class="tsd-kind-icon">type</a>
+								<a href="ipageobjectbuilderinputoptions.html#e2etestpath" class="tsd-kind-icon">e2e<wbr>Test<wbr>Path</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipageobjectbuilderinputoptions.html#enablecustombrowser" class="tsd-kind-icon">enable<wbr>Custom<wbr>Browser</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipageobjectbuilderinputoptions.html#waitforangularenabled" class="tsd-kind-icon">wait<wbr>For<wbr>Angular<wbr>Enabled</a>
 							</li>
 						</ul>
 					</li>
