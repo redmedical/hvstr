@@ -22,8 +22,11 @@ jobs:
         - npm run lint
         - npm run coverage
     - stage: Utils-Release
+      if: (NOT type IN (pull_request)) AND (branch = master) AND (tags = true)
       script:
         - cd utils
+        - cp ../readme.md .
+        - cp ../LICENSE .
         - npm i
         - npm run build
       after_deploy:
@@ -36,8 +39,11 @@ jobs:
               tags: true
               branch: master
     - stage: Client-Release
+      if: (NOT type IN (pull_request)) AND (branch = master) AND (tags = true)
       script:
         - cd client
+        - cp ../readme.md .
+        - cp ../LICENSE .
         - npm i
         - npm run build
       after_deploy:
@@ -51,8 +57,11 @@ jobs:
               tags: true
               branch: master
     - stage: Core-Release
+      if: (NOT type IN (pull_request)) AND (branch = master) AND (tags = true)
       script:
         - cd core
+        - cp ../readme.md .
+        - cp ../LICENSE .
         - npm i
         - npm run build
       after_deploy:

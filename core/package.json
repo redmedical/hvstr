@@ -1,6 +1,6 @@
 {
   "name": "@redmedical/hvstr-core",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "dist/src/index",
   "types": "dist/src/index",
   "scripts": {
@@ -11,22 +11,25 @@
     "coverage": "ts-node node_modules/nyc/bin/nyc.js npm rum test"
   },
   "dependencies": {
-    "@redmedical/hvstr-utils": "1.0.0",
+    "@redmedical/hvstr-utils": "1.1.0",
+    "lodash": "^4.17.14",
     "mkdirp": "^0.5.1",
-    "protractor": "~5.1.2",
+    "protractor": "^5.4.2",
     "require-from-string": "^2.0.2",
-    "ts-node": "^7.0.1"
+    "ts-node": "^8.1.0"
   },
   "devDependencies": {
-    "@types/jasmine": "^3.3.12",
-    "@types/node": "^10.9.4",
-    "jasmine": "^3.3.1",
-    "nyc": "^13.3.0",
-    "tslint": "~5.9.1",
-    "typedoc": "^0.14.0",
-    "typescript": "^3.0.3"
+    "@types/jasmine": "^3.3.13",
+    "@types/lodash": "^4.14.136",
+    "@types/node": "^10.14.10",
+    "jasmine": "^3.4.0",
+    "nyc": "^14.1.1",
+    "tslint": "^5.16.0",
+    "typedoc": "^0.14.2",
+    "typescript": "^3.4.5"
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "license": "Apache-2.0"
 }

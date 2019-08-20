@@ -4,11 +4,17 @@ import { QueuedCodeBuilder } from './code-builder/queued-code-builder';
 import { IChildPage } from '../page-object/child-page';
 import { Path } from '../local-utils/path';
 import { CustomSnippets } from './element-function-custom-snippet';
+import { IPageObjectBuilderOptions } from '../page-object-builder-options';
 
 /**
  * @private
  */
 export class GeneratedPageObjectCodeGenerator {
+
+    constructor(
+        private options: IPageObjectBuilderOptions,
+    ){ }
+
     generatePageObject(params: IGeneratePageObjectRootParameter): string {
         params.codeBuilder.reset();
         const protractorImports: string[] = ['by', 'element'];
@@ -32,9 +38,9 @@ export class GeneratedPageObjectCodeGenerator {
         this
             .addPublicMembers(childPageNames, codeBuilder)
             .addEmptyLine(codeBuilder)
-            .addConstructor(codeBuilder, childPageNames);
+            .addConstructor(codeBuilder, childPageNames, protractorImports);
 
-        if (Boolean(params.route)) {
+        if (Boolean(params.route) && !this.options.enableCustomBrowser) {
             protractorImports.push('browser');
         }
 
@@ -67,7 +73,7 @@ export class GeneratedPageObjectCodeGenerator {
     }
 
     private addNavigateTo(codeBuilder: QueuedCodeBuilder, route: string | undefined): GeneratedPageObjectCodeGenerator {
-        codeBuilder.addConditionalLine(`navigateTo = () => browser.get(this.route);`, Boolean(route));
+        codeBuilder.addConditionalLine(`navigateTo = () => ${this.options.enableCustomBrowser ? 'this.' : ''}browser.get(this.route);`, Boolean(route));
         return this;
     }
 
@@ -118,12 +124,24 @@ export class GeneratedPageObjectCodeGenerator {
         return this;
     }
 
-    private addConstructor(codeBuilder: QueuedCodeBuilder, childPageNames: string[]): GeneratedPageObjectCodeGenerator {
-        if (childPageNames.length === 0) {
+    private addConstructor(codeBuilder: QueuedCodeBuilder, childPageNames: string[], protractorImports: string[]): GeneratedPageObjectCodeGenerator {
+        if (childPageNames.length === 0 && !this.options.enableCustomBrowser) {
             return this;
         }
+        if (this.options.enableCustomBrowser) {
+            codeBuilder
+                .addLine(`constructor(`)
+                .increaseDepth()
+                .addLine(`private browser: ProtractorBrowser = _browser`)
+                .decreaseDepth()
+                .addLine(`) {`);
+            protractorImports.push('ProtractorBrowser');
+            protractorImports.push('browser as _browser');
+        } else {
+            codeBuilder
+                .addLine(`constructor() {`);
+        }
         codeBuilder
-            .addLine(`constructor() {`)
             .increaseDepth();
         childPageNames.forEach(childPageName => {
             codeBuilder.addLine(`this.${Utils.firstCharToLowerCase(childPageName)} = new ${childPageName}();`);
@@ -179,7 +197,7 @@ export class GeneratedPageObjectCodeGenerator {
             .addLine(`// ElementType: ${element.type.toUpperCase()}`);
 
 
-        rules.execute(element, codeBuilder, protractorImports);
+        rules.execute(element, codeBuilder, protractorImports, this.options);
 
         if (element.type.toUpperCase() === 'INPUT') {
             inputFields.push(element);

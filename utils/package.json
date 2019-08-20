@@ -1,6 +1,6 @@
 {
   "name": "@redmedical/hvstr-utils",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "dist/index",
   "types": "dist/index",
   "scripts": {
@@ -9,11 +9,12 @@
     "typedoc": "node node_modules/typedoc/bin/typedoc --out ../docs/api/utils --module commonjs --mode file --target es6 --readme none --name \"hvstr-utils API Documentation\" --tsconfig ./tsconfig.json --ignoreCompilerErrors ./src/"
   },
   "devDependencies": {
-    "typescript": "^3.0.3",
-    "tslint": "~5.9.1",
-    "typedoc": "^0.14.0"
+    "tslint": "^5.16.0",
+    "typedoc": "^0.14.2",
+    "typescript": "^3.5.2"
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "license": "Apache-2.0"
 }

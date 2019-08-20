@@ -43,7 +43,7 @@ describe('PageObjectBuilder', () => {
                 awaiter: awaiterSpy,
                 waitForAngularEnabled: false,
                 e2eTestPath: '/e2e',
-                doNotCreateDirectorys: true,
+                doNotCreateDirectories: true,
             });
             openAndGeneratePageObjectSpy = spyOn(pageObjectBuilder, 'openAndGeneratePageObject').and.returnValue(new Promise(resolve => resolve(resultObject)));
             executeByPreparerSpy = spyOn(pageObjectBuilder, 'executeByPreparer');
@@ -152,7 +152,7 @@ describe('PageObjectBuilder', () => {
                 awaiter: awaiterSpy,
                 waitForAngularEnabled: false,
                 e2eTestPath: '/e2e',
-                doNotCreateDirectorys: true,
+                doNotCreateDirectories: true,
             });
             openAndGeneratePageObjectSpy = spyOn(pageObjectBuilder, 'openAndGeneratePageObject').and.returnValue(new Promise(resolve => resolve(resultObject)));
             executeByPreparerSpy = spyOn(pageObjectBuilder, 'executeByPreparer');
@@ -220,7 +220,7 @@ describe('PageObjectBuilder', () => {
                 awaiter: awaiterSpy,
                 waitForAngularEnabled: false,
                 e2eTestPath: '/e2e',
-                doNotCreateDirectorys: true,
+                doNotCreateDirectories: true,
             });
             openAndGeneratePageObjectSpy = spyOn(pageObjectBuilder, 'openAndGeneratePageObject').and.returnValue(new Promise(resolve => resolve(resultObject)));
             generateSpy = spyOn(pageObjectBuilder, 'generate');
@@ -297,7 +297,7 @@ describe('PageObjectBuilder', () => {
                 awaiter: awaiterSpy,
                 waitForAngularEnabled: false,
                 e2eTestPath: '/e2e',
-                doNotCreateDirectorys: true,
+                doNotCreateDirectories: true,
             });
             openAndGeneratePageObjectSpy = spyOn(pageObjectBuilder, 'openAndGeneratePageObject').and.returnValue(new Promise(resolve => resolve(resultObject)));
             spyOn(pageObjectBuilder, 'getEmptyInstructFromOrigin');
@@ -333,7 +333,7 @@ describe('PageObjectBuilder', () => {
                 awaiter: awaiterSpy,
                 waitForAngularEnabled: false,
                 e2eTestPath: '/e2e',
-                doNotCreateDirectorys: true,
+                doNotCreateDirectories: true,
             });
             openAndGeneratePageObjectSpy = spyOn(pageObjectBuilder, 'openAndGeneratePageObject').and.returnValue(new Promise(resolve => resolve(resultObject)));
             spyOn(pageObjectBuilder, 'getEmptyInstructFromOrigin');
@@ -366,7 +366,7 @@ describe('PageObjectBuilder', () => {
                 awaiter: awaiterSpy,
                 waitForAngularEnabled: false,
                 e2eTestPath: '/e2e',
-                doNotCreateDirectorys: true,
+                doNotCreateDirectories: true,
             });
             spyOn(pageObjectBuilder, 'getEmptyInstructFromOrigin');
         });
@@ -439,7 +439,7 @@ describe('PageObjectBuilder', () => {
         it('should call wait for angular after redirect', async () => {
             pageObjectBuilder = new PageObjectBuilder({
                 waitForAngularEnabled: true,
-                doNotCreateDirectorys: true,
+                doNotCreateDirectories: true,
             });
             const instruct: IGenerationInstruction = {
                 byRoute: '/home',

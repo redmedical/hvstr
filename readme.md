@@ -100,7 +100,7 @@ Take a look at our [contributing guidelines](./.github/CONTRIBUTING.md)
 
 ## Documentation
 
-See [Docs](https://github.com/redmedical/hvstr/tree/master/docs/api)
+See [Docs](https://redmedical.github.io/hvstr/docs/)
 
 
 ## License
