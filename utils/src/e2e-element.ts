@@ -7,7 +7,6 @@
  */
 export interface IE2eElement extends ISimpleE2EElement {
     uid: string;
-    nativeElement: Element;
     children: IE2eElement[];
 }
 

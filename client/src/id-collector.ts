@@ -21,6 +21,7 @@ import { IE2eElement, Utils } from '@redmedical/hvstr-utils';
  */
 export class IdCollector {
     private static allE2EIds: IE2eElement[] = [];
+    private static uidNativeElementsMap: { uid: string, nativeElement: Element }[] = [];
     private static uidCounter: number = 0;
     private static isInitialized: boolean = false;
 
@@ -61,7 +62,8 @@ export class IdCollector {
         IdCollector.uidCounter++;
         const type = nativeElement.tagName;
         nativeElement.className += ' ' + Utils.getCssClassFromKebabId(id);
-        IdCollector.allE2EIds.push({ uid, id, type, nativeElement, parent: undefined, children: [] });
+        IdCollector.allE2EIds.push({ uid, id, type, parent: undefined, children: [] });
+        IdCollector.uidNativeElementsMap.push({uid, nativeElement});
         IdCollector.addParentRecursiveForEachChild(nativeElement, uid);
         return uid;
     }
@@ -80,12 +82,21 @@ export class IdCollector {
         IdCollector.allE2EIds = IdCollector.allE2EIds.filter(x => x.uid !== uid);
     }
 
+    private static getNativeElementForUid(uid: string): Element {
+        const matchingMapping = IdCollector.uidNativeElementsMap.find(x => x.uid === uid);
+        if(matchingMapping) {
+            return matchingMapping.nativeElement;
+        } else {
+            throw new Error('No element found for uid:' + uid);
+        }
+    }
+
     private static addParents(): void {
         IdCollector.allE2EIds.forEach(element => {
-            IdCollector.addParentRecursiveForEachChild(element.nativeElement, element.uid);
+            IdCollector.addParentRecursiveForEachChild(IdCollector.getNativeElementForUid(element.uid), element.uid);
         });
         IdCollector.allE2EIds.forEach(element => {
-            element.parent = element.nativeElement.getAttribute('e2e-parent') || undefined;
+            element.parent = IdCollector.getNativeElementForUid(element.uid).getAttribute('e2e-parent') || undefined;
         });
     }
 
@@ -104,7 +115,7 @@ export class IdCollector {
         return root;
     }
 
-    private static removeAllParents(): void{
+    private static removeAllParents(): void {
         IdCollector.allE2EIds.forEach(x => x.children = []);
     }
 
@@ -114,7 +125,7 @@ export class IdCollector {
         }
     }
 
-    private static addParentRecursive(nativeElement: Element , parentUid: string): void {
+    private static addParentRecursive(nativeElement: Element, parentUid: string): void {
         nativeElement.setAttribute('e2e-parent', parentUid);
         IdCollector.addParentRecursiveForEachChild(nativeElement, parentUid);
     }
