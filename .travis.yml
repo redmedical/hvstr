@@ -22,7 +22,7 @@ jobs:
         - npm run lint
         - npm run coverage
     - stage: Utils-Release
-      if: (NOT type IN (pull_request)) AND (branch = master) AND (tag IS present)
+      if: (NOT type IN (pull_request)) AND (tag IS present)
       script:
         - cd utils
         - cp ../readme.md .
@@ -39,7 +39,7 @@ jobs:
               tags: true
               branch: master
     - stage: Client-Release
-      if: (NOT type IN (pull_request)) AND (branch = master) AND (tag IS present)
+      if: (NOT type IN (pull_request)) AND (tag IS present)
       script:
         - cd client
         - cp ../readme.md .
@@ -57,7 +57,7 @@ jobs:
               tags: true
               branch: master
     - stage: Core-Release
-      if: (NOT type IN (pull_request)) AND (branch = master) AND (tag IS present)
+      if: (NOT type IN (pull_request)) AND (tag IS present)
       script:
         - cd core
         - cp ../readme.md .

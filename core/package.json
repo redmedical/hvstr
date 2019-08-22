@@ -1,6 +1,6 @@
 {
   "name": "@redmedical/hvstr-core",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "main": "dist/src/index",
   "types": "dist/src/index",
   "scripts": {
@@ -11,7 +11,7 @@
     "coverage": "ts-node node_modules/nyc/bin/nyc.js npm rum test"
   },
   "dependencies": {
-    "@redmedical/hvstr-utils": "1.1.2",
+    "@redmedical/hvstr-utils": "1.1.3",
     "lodash": "^4.17.14",
     "mkdirp": "^0.5.1",
     "protractor": "^5.4.2",
