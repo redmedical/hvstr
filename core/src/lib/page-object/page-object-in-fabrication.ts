@@ -22,6 +22,7 @@ export interface IPageObjectInFabrication {
     hasFillForm: boolean;
     generatedPageObjectPath: Path;
     generatedExtendingPageObjectPath: Path;
+    historyUid: number;
     /**
      * appends content to this page-object
      *

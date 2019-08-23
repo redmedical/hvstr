@@ -58,6 +58,7 @@ function setResultAttributes(
     result.hasFillForm = params.hasFillForm;
     result.generatedPageObjectPath = params.generatedPageObjectPath;
     result.generatedExtendingPageObjectPath = params.generatedExtendingPageObjectPath;
+    result.historyUid = params.pageObjectBuilder.historyUidCounter;
     if (params.origin) {
         params.origin!.childPages.forEach(childPage => {
             const childName = CaseConvert.fromPascal.toCamel(childPage.name);
