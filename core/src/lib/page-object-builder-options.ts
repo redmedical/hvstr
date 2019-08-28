@@ -69,12 +69,6 @@ export interface IPageObjectBuilderInputOptions {
  * @export
  * @interface IPageObjectBuilderOptions
  */
-export interface IPageObjectBuilderOptions extends IPageObjectBuilderInputOptions {
-    codeBuilder: QueuedCodeBuilder;
-    awaiter: Awaiter;
-    e2eTestPath: string;
-    waitForAngularEnabled: boolean;
-    doNotCreateDirectories: boolean;
-    enableCustomBrowser: boolean;
-    logger: ILogger;
-}
+export type IPageObjectBuilderOptions = Required<IPageObjectBuilderInputOptions & { logger: ILogger }>;
+
+
