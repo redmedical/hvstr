@@ -14,6 +14,7 @@ import { initCustomSnippet, CustomSnippets } from './code-generation/element-fun
 import { E2eElementTree } from './e2e-element/e2e-element-tree';
 import { IPageObjectBuilderOptions, IPageObjectBuilderInputOptions } from './page-object-builder-options';
 import { defaults } from 'lodash';
+import { DefaultLogger } from './local-utils/logger';
 
 /**
  * Contains all important interfaces to generate page-objects.
@@ -39,6 +40,7 @@ export class PageObjectBuilder {
         e2eTestPath:  '/e2e',
         doNotCreateDirectories: false,
         enableCustomBrowser: false,
+        logger: new DefaultLogger(),
     };
 
     /**
@@ -49,7 +51,8 @@ export class PageObjectBuilder {
     constructor(
         options: IPageObjectBuilderInputOptions,
     ) {
-        this.options = defaults({...options}, this.options);
+        this.options = defaults({ ...options }, this.options);
+        this.options.logger = defaults({ ...this.options.logger }, new DefaultLogger());
         this.packagePath = new ProjectPathUtil(process.cwd(), this.options.e2eTestPath!);
         if (!this.options.doNotCreateDirectories) {
             this.packagePath.createAllDirectories();
@@ -72,14 +75,17 @@ export class PageObjectBuilder {
      */
     public async generate(instruct: IGenerationInstruction, origin?: IPageObjectInFabrication): Promise<IPageObjectInFabrication> {
         if (!instruct.name) {
-            throw new Error('a new page object needs an name!');
+            const error = new Error('a new page object needs an name!');
+            this.options.logger.error(error);
+            throw error;
         }
         await this.executeByPreparer(instruct, origin);
+
         const newTree: E2eElementTree = new E2eElementTree(await BrowserApi.getE2eElementTree())
             .restrict(instruct.excludeElements, instruct.restrictToElements)
             .mergeDuplicateArrayElements()
             .resolveConflicts();
-        return await this.openAndGeneratePageObject({
+        const result = await this.openAndGeneratePageObject({
             instruct,
             pageObjectName: instruct.name!,
             instructPath: instruct.path,
@@ -88,6 +94,9 @@ export class PageObjectBuilder {
             origin,
             hasFillForm: false
         });
+        this.options.logger.logSuccess(`✓  [generate]\t\t${instruct.name}`);
+        this.options.logger.debug('generate for instruct:', instruct, 'result:', result);
+        return result;
     }
 
     /**
@@ -111,7 +120,7 @@ export class PageObjectBuilder {
             .mergeTo(scope.e2eElementTree)
             .mergeDuplicateArrayElements()
             .resolveConflicts();
-        return await this.openAndGeneratePageObject({
+        const result = await this.openAndGeneratePageObject({
             instruct,
             pageObjectName: scope.name,
             instructPath: scope.instruct.path,
@@ -121,6 +130,9 @@ export class PageObjectBuilder {
             route: scope.route,
             hasFillForm: scope.hasFillForm
         });
+        this.options.logger.logSuccess(`✓  [append]\t\tto ${scope.name}`);
+        this.options.logger.debug('append to ' + scope + ' for instruct:', instruct, 'result:', result);
+        return result;
     }
 
     /**
@@ -154,6 +166,8 @@ export class PageObjectBuilder {
                 route: scope.route,
                 hasFillForm: scope.hasFillForm
             });
+        this.options.logger.logSuccess(`✓  [appendChild]\t${instruct.name} to ${scope.name}`);
+        this.options.logger.debug('append Child to ' + parent + ' for instruct:', instruct, 'result:', child);
         return parent;
     }
 
@@ -179,6 +193,8 @@ export class PageObjectBuilder {
                 route,
                 hasFillForm: scope.hasFillForm
             });
+        this.options.logger.logSuccess(`✓  [addNavigateTo]\tto ${scope.name}`);
+        this.options.logger.debug('added NavigateTo result:', parent);
         return parent;
     }
 
@@ -210,6 +226,8 @@ export class PageObjectBuilder {
                 route: scope.route,
                 hasFillForm: true
             });
+        this.options.logger.logSuccess(`✓  [addFillForm]\tto ${scope.name}`);
+        this.options.logger.debug('added FillForm result:', parent);
         return parent;
     }
 
@@ -218,6 +236,7 @@ export class PageObjectBuilder {
      * @private
      */
     async executeByPreparer(instruct: IGenerationInstruction, origin: IPageObjectInFabrication | undefined): Promise<void> {
+        this.options.logger.debug('executeByPreparer for instruct', instruct, 'with origin:', origin);
         const awaiter: Awaiter = instruct.awaiter || this.options.awaiter;
         if (instruct.from) {
             await this.executeByPreparer(instruct.from.instruct, instruct.from.origin);
