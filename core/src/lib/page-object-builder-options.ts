@@ -1,5 +1,6 @@
 import { QueuedCodeBuilder } from './code-generation/code-builder/queued-code-builder';
 import { Awaiter } from './local-utils/types';
+import { IOptionalLogger, ILogger } from './local-utils/logger';
 
 export interface IPageObjectBuilderInputOptions {
     /**
@@ -50,6 +51,15 @@ export interface IPageObjectBuilderInputOptions {
      * @type {boolean}
      */
     enableCustomBrowser?: boolean;
+    /**
+     * define a custom logger.
+     *
+     * the default logger is silent.
+     *
+     * @type {ILogger}
+     * @memberof IPageObjectBuilderInputOptions
+     */
+    logger?: IOptionalLogger;
 }
 
 
@@ -66,4 +76,5 @@ export interface IPageObjectBuilderOptions extends IPageObjectBuilderInputOption
     waitForAngularEnabled: boolean;
     doNotCreateDirectories: boolean;
     enableCustomBrowser: boolean;
+    logger: ILogger;
 }
