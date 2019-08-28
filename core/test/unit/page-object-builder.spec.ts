@@ -376,10 +376,10 @@ describe('PageObjectBuilder', () => {
             await pageObjectBuilder.executeByPreparer(instruct, undefined);
         });
 
-        it('should call awaiter twice', async () => {
+        it('should call awaiter once', async () => {
             const instruct: IGenerationInstruction = {};
             await pageObjectBuilder.executeByPreparer(instruct, undefined);
-            expect(awaiterSpy).toHaveBeenCalledTimes(2);
+            expect(awaiterSpy).toHaveBeenCalledTimes(1);
         });
 
         it('should call navigate to route from instruct', async () => {

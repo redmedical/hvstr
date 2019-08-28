@@ -1,4 +1,5 @@
 /**
  * @private
  */
-export type Awaiter = (call?: number) => Promise<void>;
+export type Awaiter = () => Promise<void>;
+

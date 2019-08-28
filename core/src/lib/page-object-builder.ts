@@ -254,14 +254,13 @@ export class PageObjectBuilder {
             }
             await BrowserApi.sleep(this.options.pageLoadTimeOut);
         }
-        await awaiter(1);
         if (instruct.byAction) {
             instruct.byAction();
         }
         else if (instruct.byActionAsync) {
             await instruct.byActionAsync();
         }
-        await awaiter(2);
+        await awaiter();
     }
 
     /**
