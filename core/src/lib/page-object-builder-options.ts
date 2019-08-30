@@ -60,6 +60,12 @@ export interface IPageObjectBuilderInputOptions {
      * @memberof IPageObjectBuilderInputOptions
      */
     logger?: IOptionalLogger;
+    /**
+     * Time to wait after document is ready and if wait for angular enabled, is ready, before generating page object.
+     *
+     * @type {number} ms
+     */
+    pageLoadTimeOut?: number;
 }
 
 

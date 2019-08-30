@@ -41,6 +41,7 @@ export class PageObjectBuilder {
         doNotCreateDirectories: false,
         enableCustomBrowser: false,
         logger: new DefaultLogger(),
+        pageLoadTimeOut: 0,
     };
 
     /**
@@ -248,10 +249,10 @@ export class PageObjectBuilder {
             // After the redirect, the script continues while the browser is still loading.
             // it looks like waitForAngular resolves the promise immediately, because no Angular app
             await BrowserApi.awaitDocumentToBeReady();
-            await BrowserApi.sleep(2000);
             if (this.options.waitForAngularEnabled) {
                 await BrowserApi.waitForAngular();
             }
+            await BrowserApi.sleep(this.options.pageLoadTimeOut);
         }
         await awaiter(1);
         if (instruct.byAction) {
