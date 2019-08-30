@@ -33,6 +33,8 @@ export class PageObjectBuilder {
     public customSnippets: CustomSnippets;
     packagePath: ProjectPathUtil;
 
+    historyUidCounter: number;
+
     private options: IPageObjectBuilderOptions = {
         codeBuilder: new QueuedCodeBuilder('  '),
         awaiter: (async () => { }),
@@ -60,6 +62,7 @@ export class PageObjectBuilder {
         }
         this.customSnippets = initCustomSnippet();
         BrowserApi.setWaitForAngularEnabled(this.options.waitForAngularEnabled);
+        this.historyUidCounter = -1;
     }
 
     /**
@@ -81,6 +84,7 @@ export class PageObjectBuilder {
             throw error;
         }
         await this.executeByPreparer(instruct, origin);
+        this.historyUidCounter++;
 
         const newTree: E2eElementTree = new E2eElementTree(await BrowserApi.getE2eElementTree())
             .restrict(instruct.excludeElements, instruct.restrictToElements)
@@ -116,6 +120,8 @@ export class PageObjectBuilder {
             instruct.path = scope.instruct.path;
         }
         await this.executeByPreparer(instruct, scope);
+        this.historyUidCounter++;
+
         const newTree: E2eElementTree = new E2eElementTree(await BrowserApi.getE2eElementTree())
             .restrict(instruct.excludeElements, instruct.restrictToElements)
             .mergeTo(scope.e2eElementTree)
@@ -240,9 +246,15 @@ export class PageObjectBuilder {
         this.options.logger.debug('executeByPreparer for instruct', instruct, 'with origin:', origin);
         const awaiter: Awaiter = instruct.awaiter || this.options.awaiter;
         if (instruct.from) {
-            await this.executeByPreparer(instruct.from.instruct, instruct.from.origin);
+            this.options.logger.debug('instruct has from entity with history step ', instruct.from.historyUid);
+            if (instruct.from.historyUid !== this.historyUidCounter) {
+                await this.executeByPreparer(instruct.from.instruct, instruct.from.origin);
+            }
         } else if (origin) {
-            await this.executeByPreparer(origin.instruct, origin.origin);
+            this.options.logger.debug('instruct has origin with history step ', origin.historyUid);
+            if (origin.historyUid !== this.historyUidCounter) {
+                await this.executeByPreparer(origin.instruct, origin.origin);
+            }
         }
         if (instruct.byRoute) {
             await BrowserApi.navigate(instruct.byRoute);
