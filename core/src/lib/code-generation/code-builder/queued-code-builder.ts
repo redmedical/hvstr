@@ -6,6 +6,7 @@ import { StringDynamicConditionalLineStep } from './queued-code-builder/string-d
 import { DynamicStringLineStep } from './queued-code-builder/dynamic-string-line-step';
 import { IncreaseDepthStep } from './queued-code-builder/increase-depth-step';
 import { DecreaseDepthStep } from './queued-code-builder/decrease-depth-step';
+import { CodeBuilderImports } from './code-builder-imports';
 
 /**
  * The QueuedCodeBuilder class is definitely too build generate the code of the page-objects.
@@ -16,7 +17,10 @@ import { DecreaseDepthStep } from './queued-code-builder/decrease-depth-step';
  */
 export class QueuedCodeBuilder{
 
+    private imports: CodeBuilderImports;
+
     private queue: IQueueStep[];
+
 
     /**
      * Creates an instance of QueuedCodeBuilder.
@@ -25,6 +29,7 @@ export class QueuedCodeBuilder{
      */
     constructor(private tab: string) {
         this.queue = [];
+        this.imports = new CodeBuilderImports();
     }
 
     /**
@@ -146,6 +151,31 @@ export class QueuedCodeBuilder{
     }
 
     /**
+     * add an import to the CodeBuilder Instance.
+     *
+     * @param {string} element which element should be imported. ```import {<Element>} from '...'```
+     * @param {string} from which library should imported. ```import {...} from '<From>'```
+     * @param {string} [importAs] use alias for this element. ```import {<Element> as <importAs>} from '...'```
+     * @returns {QueuedCodeBuilder}
+     * @memberof QueuedCodeBuilder
+     */
+    addImport(element: string, from: string, importAs?: string): QueuedCodeBuilder {
+        this.imports.add(element, from, importAs);
+        return this;
+    }
+
+    /**
+     * determines the location where all imports from the CodeBuilder instance should be placed.
+     *
+     * @returns {QueuedCodeBuilder}
+     * @memberof QueuedCodeBuilder
+     */
+    addImportStatements(): QueuedCodeBuilder {
+        this.queue.push(this.imports);
+        return this;
+    }
+
+    /**
      * resets the QueuedCodeBuilder queue
      *
      * @returns {QueuedCodeBuilder}
@@ -153,6 +183,7 @@ export class QueuedCodeBuilder{
      */
     reset(): QueuedCodeBuilder {
         this.queue = [];
+        this.imports.clear();
         return this;
     }
 }

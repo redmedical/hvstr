@@ -33,4 +33,15 @@ export class E2eElementTree {
         this.tree = restrictor(this.tree, excludeElements, restrictToElements);
         return this;
     }
+    get flatTree(): E2eElement[] {
+        return this.flatTreeRecursive(this.tree);
+    }
+    private flatTreeRecursive(layer: E2eElement[]): E2eElement[] {
+        return layer.reduce(
+            (acc: E2eElement[], cur: E2eElement) => {
+                return [...acc, cur, ...this.flatTreeRecursive(cur.children)];
+            },
+            [],
+        );
+    }
 }
