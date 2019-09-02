@@ -231,7 +231,7 @@ export class CustomSnippets {
  *
  * @interface ICustomSnippet
  */
-interface ICustomSnippet {
+export interface ICustomSnippet {
     /**
      * A function which returns true, when the custom snippet should be used.
      *
