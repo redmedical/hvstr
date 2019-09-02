@@ -4,4 +4,5 @@ export { CodeBuilder } from './lib/code-generation/code-builder/code-builder';
 export { IGenerationInstruction } from './lib/local-utils/generation-instruction';
 export { IPageObjectInFabrication } from './lib/page-object/page-object-in-fabrication';
 export { QueuedCodeBuilder } from './lib/code-generation/code-builder/queued-code-builder';
+export { ICustomSnippet } from './lib/code-generation/custom-snippet';
 export { Utils } from '@redmedical/hvstr-utils';
