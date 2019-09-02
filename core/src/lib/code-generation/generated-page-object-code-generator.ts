@@ -3,7 +3,7 @@ import { E2eElement } from '../e2e-element/e2e-element';
 import { QueuedCodeBuilder } from './code-builder/queued-code-builder';
 import { IChildPage } from '../page-object/child-page';
 import { Path } from '../local-utils/path';
-import { CustomSnippets } from './element-function-custom-snippet';
+import { CustomSnippets } from './custom-snippet';
 import { IPageObjectBuilderOptions } from '../page-object-builder-options';
 import { E2eElementTree } from '../e2e-element/e2e-element-tree';
 

@@ -9,7 +9,7 @@ import { IPageObjectInFabrication } from './page-object/page-object-in-fabricati
 import { compilePageObject, requirePageObject } from './page-object/page-object-loader';
 import { IChildPage } from './page-object/child-page';
 import { Awaiter } from './local-utils/types';
-import { initCustomSnippet, CustomSnippets } from './code-generation/element-function-custom-snippet';
+import { initCustomSnippet, CustomSnippets } from './code-generation/custom-snippet';
 import { E2eElementTree } from './e2e-element/e2e-element-tree';
 import { IPageObjectBuilderOptions, IPageObjectBuilderInputOptions } from './page-object-builder-options';
 import { defaults } from 'lodash';
