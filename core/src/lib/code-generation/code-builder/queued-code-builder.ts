@@ -9,7 +9,7 @@ import { DecreaseDepthStep } from './queued-code-builder/decrease-depth-step';
 import { CodeBuilderImports } from './code-builder-imports';
 
 /**
- * The QueuedCodeBuilder class is definitely too build generate the code of the page-objects.
+ * The QueuedCodeBuilder class is destined to build and generate the code of the page-objects.
  * The QueuedCodeBuilder handles the tab depth of the code.
  *
  * @export
@@ -183,7 +183,7 @@ export class QueuedCodeBuilder{
      */
     reset(): QueuedCodeBuilder {
         this.queue = [];
-        this.imports.clear();
+        this.imports.reset();
         return this;
     }
 }

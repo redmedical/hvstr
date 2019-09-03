@@ -19,19 +19,20 @@ export class CodeBuilderImports implements IQueueStep {
             importLib = { from, elements: [] };
             this.imports.push(importLib);
         }
-        if (importLib.elements.findIndex(x => x.element === element) === -1) {
+        const libDoesNotContainImport = importLib.elements.findIndex(x => x.element === element) === -1;
+        if (libDoesNotContainImport) {
             importLib.elements.push({ element, importAs });
         }
     }
     execute(codeBuilder: CodeBuilder): void {
-        this.imports.forEach(_import => {
-            const elements = _import.elements.map(x =>
+        this.imports.forEach(libraryImport => {
+            const elements = libraryImport.elements.map(x =>
                 x.importAs ? `${x.element} as ${x.importAs}` : x.element
             ).join(', ');
-            codeBuilder.addLine(`import { ${elements} } from '${_import.from}';`);
+            codeBuilder.addLine(`import { ${elements} } from '${libraryImport.from}';`);
         });
     }
-    clear(): void {
+    reset(): void {
         this.imports = [];
     }
 }

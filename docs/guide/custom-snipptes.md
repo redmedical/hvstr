@@ -1,5 +1,5 @@
 # Custom Snippets
-Assumed that you need hvstr to generate some custom functionality for your elements. Therefore hvstr has the custom snippets feature.
+Assumed that you need hvstr to generate some custom functionality for your elements. For that hvstr has the custom snippets feature.
 It allows you to add code to the page-object generation process, which will be added, under a given condition.
 
 There are three different types of custom snippets. Each type will be generated at a different location in the code:
@@ -86,20 +86,20 @@ now the page-object contains our new function.:
 * ### CustomSnippets For FillForm
 
 In this type you can extend the [FillForm](./add-meethodes.md#addfillform) methode, to let you fill out your custom form elements.
-The fillForm methode requires a data parameter. You can define the type in the custom snippet.
+The fillForm methode requires a data parameter. You can define the type of the property, which belongs to the element, in the custom snippet.
 
 #### Example
 this custom snippet:
 ```ts
     pageObjectBuilder.customSnippets.addForFillForm({
-        condition: (element) => element.type === 'INPUT', // Add this custom snippet for all elements of type input
+        condition: (element) => element.type === 'INPUT', // Add this custom snippet for all elements of type input. (element.type is always written in UPPERCASE)
         callBack: async (
             element: E2eElement,
             codeBuilder: QueuedCodeBuilder,
             options: IPageObjectBuilderOptions,
         ) => {
             codeBuilder
-                .addLine(`if (data.${Utils.firstCharToLowerCase(element.id)}) {`) // make sure, if the entity on the data object is set
+                .addLine(`if (data.${Utils.firstCharToLowerCase(element.id)}) {`) // make sure, that the property on the data object is set
                 .increaseDepth()
                 .addLine(`await this.get${element.id}().sendKeys(data.${Utils.firstCharToLowerCase(element.id)});`)
                 .decreaseDepth()
@@ -129,7 +129,7 @@ will look like this in your page-object:
 * ### CustomSnippets For ClearForm
 
 
-In this type you can extend the [ClearForm](./add-methods.md#addfillform) methode, to let you clear your form elements.
+In this type you can extend the [ClearForm](./add-methods.md#addfillform) methode, which clears your form elements.
 
 #### Example
 this custom snippet:

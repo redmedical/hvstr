@@ -33,6 +33,14 @@ export class E2eElementTree {
         this.tree = restrictor(this.tree, excludeElements, restrictToElements);
         return this;
     }
+    /**
+     * Flat tree returns an array, which contains all elements of the tree. So you don't need to iterate recursive through nested elements.
+     *
+     * @private
+     * @readonly
+     * @type {E2eElement[]}
+     * @memberof E2eElementTree
+     */
     get flatTree(): E2eElement[] {
         return this.flatTreeRecursive(this.tree);
     }
