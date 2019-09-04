@@ -1,7 +1,7 @@
-import { E2eElement } from '../e2e-element/e2e-element';
 import { IGenerationInstruction } from '../local-utils/generation-instruction';
 import { Path } from '../local-utils/path';
 import { IChildPage } from './child-page';
+import { E2eElementTree } from '../e2e-element/e2e-element-tree';
 
 /**
  * The IPageObjectInFabrication is an interface, which contains generated page-objects, helper methods and some internal data.
@@ -13,7 +13,7 @@ import { IChildPage } from './child-page';
  */
 export interface IPageObjectInFabrication {
     [key: string]: any;
-    e2eElementTree: E2eElement[];
+    e2eElementTree: E2eElementTree;
     name: string;
     origin: IPageObjectInFabrication | undefined;
     instruct: IGenerationInstruction;

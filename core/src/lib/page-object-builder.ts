@@ -5,7 +5,6 @@ import { GeneratedPageObjectCodeGenerator } from './code-generation/generated-pa
 import { QueuedCodeBuilder } from './code-generation/code-builder/queued-code-builder';
 import { ProjectPathUtil, Path } from './local-utils/path';
 import { ExtendingPageObjectCodeGenerator } from './code-generation/extending-page-object-code-generator';
-import { E2eElement } from './e2e-element/e2e-element';
 import { IPageObjectInFabrication } from './page-object/page-object-in-fabrication';
 import { compilePageObject, requirePageObject } from './page-object/page-object-loader';
 import { IChildPage } from './page-object/child-page';
@@ -94,7 +93,7 @@ export class PageObjectBuilder {
             instruct,
             pageObjectName: instruct.name!,
             instructPath: instruct.path,
-            e2eElementTree: newTree.tree,
+            e2eElementTree: newTree,
             childPages: [],
             origin,
             hasFillForm: false
@@ -131,7 +130,7 @@ export class PageObjectBuilder {
             instruct,
             pageObjectName: scope.name,
             instructPath: scope.instruct.path,
-            e2eElementTree: newTree.tree,
+            e2eElementTree: newTree,
             childPages: scope.childPages,
             origin: scope,
             route: scope.route,
@@ -290,12 +289,12 @@ export class PageObjectBuilder {
             generateGeneratedPageObject.generatePageObject({
                 pageName: params.pageObjectName,
                 generatedPageObjectPath,
-                elementTreeRoot: params.e2eElementTree,
+                elementTree: params.e2eElementTree,
                 childPages: params.childPages,
                 codeBuilder: this.options.codeBuilder!,
                 route: params.route,
                 hasFillForm: params.hasFillForm,
-                rules: this.customSnippets,
+                customSnippets: this.customSnippets,
             });
         if (!params.instruct.virtual) {
             this.writePageObject(generatedPageObject, generatedPageObjectPath);
@@ -317,12 +316,12 @@ export class PageObjectBuilder {
         const generatedPageObjectWithoutChildren: string =
             generateGeneratedPageObject.generatePageObject({
                 pageName: params.pageObjectName,
-                elementTreeRoot: params.e2eElementTree,
+                elementTree: params.e2eElementTree,
                 childPages: [],
                 codeBuilder: this.options.codeBuilder!,
                 route: params.route,
                 hasFillForm: params.hasFillForm,
-                rules: this.customSnippets,
+                customSnippets: this.customSnippets,
             });
         const jsCode = compilePageObject(generatedPageObjectWithoutChildren);
 
@@ -373,7 +372,7 @@ interface IOpenAndGeneratePageObjectInstruct {
     instruct: IGenerationInstruction;
     pageObjectName: string;
     instructPath?: string;
-    e2eElementTree: E2eElement[];
+    e2eElementTree: E2eElementTree;
     childPages: IChildPage[];
     origin?: IPageObjectInFabrication;
     newChild?: IPageObjectInFabrication;
