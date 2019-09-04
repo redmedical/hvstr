@@ -1,11 +1,11 @@
 import { IGenerationInstruction } from '../local-utils/generation-instruction';
-import { E2eElement } from '../e2e-element/e2e-element';
 import { IPageObjectInFabrication } from './page-object-in-fabrication';
 import * as ts from 'typescript';
 import { PageObjectBuilder } from '../page-object-builder';
 import { Path } from '../local-utils/path';
 import { IChildPage } from './child-page';
 import { CaseConvert } from '../local-utils/case-converter';
+import { E2eElementTree } from '../e2e-element/e2e-element-tree';
 
 /**
  * @private
@@ -78,7 +78,7 @@ interface IPageObjLoadParams {
     instruct: IGenerationInstruction;
     pageObjectName: string;
     jsCode: string;
-    e2eElementTree: E2eElement[];
+    e2eElementTree: E2eElementTree;
     childPages: IChildPage[];
     origin?: IPageObjectInFabrication;
     newChild?: IPageObjectInFabrication;

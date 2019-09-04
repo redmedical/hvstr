@@ -3,8 +3,9 @@ import { E2eElement } from '../e2e-element/e2e-element';
 import { QueuedCodeBuilder } from './code-builder/queued-code-builder';
 import { IChildPage } from '../page-object/child-page';
 import { Path } from '../local-utils/path';
-import { CustomSnippets } from './element-function-custom-snippet';
+import { CustomSnippets } from './custom-snippet';
 import { IPageObjectBuilderOptions } from '../page-object-builder-options';
+import { E2eElementTree } from '../e2e-element/e2e-element-tree';
 
 /**
  * @private
@@ -13,20 +14,22 @@ export class GeneratedPageObjectCodeGenerator {
 
     constructor(
         private options: IPageObjectBuilderOptions,
-    ){ }
+    ) { }
 
-    generatePageObject(params: IGeneratePageObjectRootParameter): string {
-        params.codeBuilder.reset();
-        const protractorImports: string[] = ['by', 'element'];
-        const inputFields: E2eElement[] = [];
+    generatePageObject(params: IGeneratePageObjectParameter): string {
+        params.codeBuilder
+            .reset()
+            .addImport('by', 'protractor')
+            .addImport('element', 'protractor');
+
         this
-            .addImports(protractorImports, params)
+            .addImports(params)
             .addFileInfoComment(params.codeBuilder)
-            .addClass(protractorImports, inputFields, params);
+            .addClass(params);
         return params.codeBuilder.getResult();
     }
 
-    private addClass(protractorImports: string[], inputFields: E2eElement[], params:IGeneratePageObjectRootParameter): GeneratedPageObjectCodeGenerator {
+    private addClass(params: IGeneratePageObjectParameter): GeneratedPageObjectCodeGenerator {
         const codeBuilder = params.codeBuilder;
         const childPageNames: string[] = params.childPages.map(x => x.name);
 
@@ -38,18 +41,18 @@ export class GeneratedPageObjectCodeGenerator {
         this
             .addPublicMembers(childPageNames, codeBuilder)
             .addEmptyLine(codeBuilder)
-            .addConstructor(codeBuilder, childPageNames, protractorImports);
+            .addConstructor(codeBuilder, childPageNames);
 
         if (Boolean(params.route) && !this.options.enableCustomBrowser) {
-            protractorImports.push('browser');
+            codeBuilder.addImport('browser', 'protractor');
         }
 
         this
             .addRoute(codeBuilder, params.route)
             .addEmptyLine(codeBuilder)
-            .addGetterMethods(inputFields, protractorImports, params)
+            .addGetterMethods(params)
             .addEmptyLine(codeBuilder)
-            .addHelperMethods(inputFields, params);
+            .addHelperMethods(params);
 
         codeBuilder
             .decreaseDepth()
@@ -58,7 +61,7 @@ export class GeneratedPageObjectCodeGenerator {
         return this;
     }
 
-    private addRoute(codeBuilder: QueuedCodeBuilder, route: string | undefined): GeneratedPageObjectCodeGenerator  {
+    private addRoute(codeBuilder: QueuedCodeBuilder, route: string | undefined): GeneratedPageObjectCodeGenerator {
         codeBuilder
             .addConditionalLine(``, Boolean(route))
             .addConditionalLine(`route = '${route}';`, Boolean(route))
@@ -66,9 +69,9 @@ export class GeneratedPageObjectCodeGenerator {
         return this;
     }
 
-    private addHelperMethods(inputFields: E2eElement[], params: IGeneratePageObjectAddHelperMethodsParameter): GeneratedPageObjectCodeGenerator {
+    private addHelperMethods(params: IGeneratePageObjectParameter): GeneratedPageObjectCodeGenerator {
         this.addNavigateTo(params.codeBuilder, params.route);
-        this.addFillForm(params.hasFillForm, inputFields, params.codeBuilder);
+        this.addFillForm(params);
         return this;
     }
 
@@ -77,36 +80,41 @@ export class GeneratedPageObjectCodeGenerator {
         return this;
     }
 
-    private addFillForm(fillForm: boolean, inputFields: E2eElement[], codeBuilder: QueuedCodeBuilder): GeneratedPageObjectCodeGenerator {
-        if (fillForm && inputFields.length > 0) {
-            codeBuilder
+    private addFillForm(params: IGeneratePageObjectParameter): GeneratedPageObjectCodeGenerator {
+        if (params.hasFillForm) {
+
+            const fillFormElements = params.elementTree.flatTree.filter(x => params.customSnippets.exists(x, 'fillForm'));
+            const clearFormElements = params.elementTree.flatTree.filter(x => params.customSnippets.exists(x, 'clearForm'));
+
+            params.codeBuilder
                 .addLine(``)
                 .addLine(`async fillForm(`)
                 .increaseDepth()
                 .addLine(`data: {`)
                 .increaseDepth();
-            inputFields.forEach(x => {
-                codeBuilder.addLine(`${Utils.firstCharToLowerCase(x.id)}: string;`);
+            fillFormElements.forEach(x => {
+                params.codeBuilder.addLine(`${Utils.firstCharToLowerCase(x.id)}?: ${params.customSnippets.types(x)};`);
             });
-            codeBuilder
+
+            params.codeBuilder
                 .decreaseDepth()
                 .addLine(`},`)
                 .decreaseDepth()
                 .addLine(`) {`)
                 .increaseDepth();
-            inputFields.forEach(x => {
-                codeBuilder.addLine(`await this.get${x.id}().sendKeys(data.${Utils.firstCharToLowerCase(x.id)});`);
+            fillFormElements.forEach(x => {
+                params.customSnippets.execute(x, params.codeBuilder, this.options, 'fillForm');
             });
-            codeBuilder
+            params.codeBuilder
                 .decreaseDepth()
                 .addLine(`}`)
                 .addLine(``)
                 .addLine(`async clearForm() {`)
                 .increaseDepth();
-            inputFields.forEach(x => {
-                codeBuilder.addLine(`await this.get${x.id}().clear();`);
+            clearFormElements.forEach(x => {
+                params.customSnippets.execute(x, params.codeBuilder, this.options, 'clearForm');
             });
-            codeBuilder
+            params.codeBuilder
                 .decreaseDepth()
                 .addLine(`}`);
         }
@@ -114,17 +122,15 @@ export class GeneratedPageObjectCodeGenerator {
     }
 
     private addGetterMethods(
-        inputFields: E2eElement[],
-        protractorImports: string[],
-        params: IGeneratePageObjectAddGetterMethodsParameter
+        params: IGeneratePageObjectParameter,
     ): GeneratedPageObjectCodeGenerator {
-        params.elementTreeRoot.forEach(x => {
-            this.generateGetterMethod(params.codeBuilder, x, inputFields, protractorImports, params.rules);
+        params.elementTree.flatTree.forEach(x => {
+            this.generateGetterMethod(params.codeBuilder, x, params.customSnippets);
         });
         return this;
     }
 
-    private addConstructor(codeBuilder: QueuedCodeBuilder, childPageNames: string[], protractorImports: string[]): GeneratedPageObjectCodeGenerator {
+    private addConstructor(codeBuilder: QueuedCodeBuilder, childPageNames: string[]): GeneratedPageObjectCodeGenerator {
         if (childPageNames.length === 0 && !this.options.enableCustomBrowser) {
             return this;
         }
@@ -132,11 +138,11 @@ export class GeneratedPageObjectCodeGenerator {
             codeBuilder
                 .addLine(`constructor(`)
                 .increaseDepth()
+                .addImport('ProtractorBrowser', 'protractor')
+                .addImport('browser', 'protractor', '_browser')
                 .addLine(`private browser: ProtractorBrowser = _browser`)
                 .decreaseDepth()
                 .addLine(`) {`);
-            protractorImports.push('ProtractorBrowser');
-            protractorImports.push('browser as _browser');
         } else {
             codeBuilder
                 .addLine(`constructor() {`);
@@ -159,18 +165,15 @@ export class GeneratedPageObjectCodeGenerator {
         return this;
     }
 
-    private addImports(protractorImports: string[], params: IGeneratePageObjectAddImportsParameter): GeneratedPageObjectCodeGenerator {
+    private addImports(params: IGeneratePageObjectParameter): GeneratedPageObjectCodeGenerator {
         const codeBuilder = params.codeBuilder;
-        codeBuilder.addDynamicLine(() => `import { ${protractorImports.join(', ')} } from 'protractor';`);
-        if(!params.generatedPageObjectPath) {
+        codeBuilder.addImportStatements();
+        if (!params.generatedPageObjectPath) {
             return this;
         }
         params.childPages.forEach(childPage => {
-            codeBuilder.addLine(
-                `import { ${childPage.name} } from '${
-                    params.generatedPageObjectPath!.relative(childPage.pageObject.generatedExtendingPageObjectPath.fullPath)
-                }';`
-            );
+            const fromPath = params.generatedPageObjectPath!.relative(childPage.pageObject.generatedExtendingPageObjectPath.fullPath);
+            codeBuilder.addImport(childPage.name, fromPath);
         });
         return this;
     }
@@ -188,23 +191,13 @@ export class GeneratedPageObjectCodeGenerator {
     private generateGetterMethod(
         codeBuilder: QueuedCodeBuilder,
         element: E2eElement,
-        inputFields: E2eElement[],
-        protractorImports: string[],
-        rules: CustomSnippets,
+        customSnippets: CustomSnippets,
     ): GeneratedPageObjectCodeGenerator {
         codeBuilder
             .addLine(``)
             .addLine(`// ElementType: ${element.type.toUpperCase()}`);
 
-
-        rules.execute(element, codeBuilder, protractorImports, this.options);
-
-        if (element.type.toUpperCase() === 'INPUT') {
-            inputFields.push(element);
-        }
-        element.children.forEach(x => {
-            this.generateGetterMethod(codeBuilder, x, inputFields, protractorImports, rules);
-        });
+        customSnippets.execute(element, codeBuilder, this.options, 'getterFunction');
         return this;
     }
 
@@ -217,43 +210,13 @@ export class GeneratedPageObjectCodeGenerator {
 /**
  * @private
  */
-interface IGeneratePageObjectRootParameter extends
-    IGeneratePageObjectAddHelperMethodsParameter,
-    IGeneratePageObjectAddGetterMethodsParameter,
-    IGeneratePageObjectAddImportsParameter {
+interface IGeneratePageObjectParameter {
     pageName: string;
-}
-
-/**
- * @private
- */
-interface IGeneratePageObjectParameter{
-    codeBuilder: QueuedCodeBuilder;
-}
-
-/**
- * @private
- */
-interface IGeneratePageObjectAddHelperMethodsParameter extends IGeneratePageObjectParameter {
     codeBuilder: QueuedCodeBuilder;
     route?: string;
     hasFillForm: boolean;
-}
-
-/**
- * @private
- */
-interface IGeneratePageObjectAddGetterMethodsParameter extends IGeneratePageObjectParameter {
-    codeBuilder: QueuedCodeBuilder;
-    elementTreeRoot: E2eElement[];
-    rules: CustomSnippets;
-}
-
-/**
- * @private
- */
-interface IGeneratePageObjectAddImportsParameter extends IGeneratePageObjectParameter {
-    codeBuilder: QueuedCodeBuilder;
+    elementTree: E2eElementTree;
+    customSnippets: CustomSnippets;
     generatedPageObjectPath?: Path;
     childPages: IChildPage[];
 }
