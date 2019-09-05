@@ -97,6 +97,10 @@ export function initCustomSnippet(): CustomSnippets {
             codeBuilder: QueuedCodeBuilder,
             options: IPageObjectBuilderOptions,
         ) => {
+            if (isArrayLikeElement(element)) {
+                options.logger.logWarn('no Support for array-like elements in fillForm!');
+                return;
+            }
             codeBuilder
                 .addLine(`if (data.${Utils.firstCharToLowerCase(element.id)}) {`)
                 .increaseDepth()
@@ -113,6 +117,10 @@ export function initCustomSnippet(): CustomSnippets {
             codeBuilder: QueuedCodeBuilder,
             options: IPageObjectBuilderOptions,
         ) => {
+            if (isArrayLikeElement(element)) {
+                options.logger.logWarn('no Support for array-like elements in clearForm!');
+                return;
+            }
             codeBuilder
                 .addImport('protractor', 'protractor/built/ptor')
                 .addLine('{')
@@ -263,6 +271,15 @@ export interface ICustomSnippet {
      * @memberof ICustomSnippet
      */
     type?: string;
+}
+
+/**
+ * @private
+ */
+function isArrayLikeElement(element: E2eElement): boolean {
+    const isCamelArrayId = Utils.isCamelArrayId.test(element.id);
+    const hasParameters = element.getterFunction!.parameters.length !== 0;
+    return  hasParameters || isCamelArrayId;
 }
 
 /**
