@@ -58,7 +58,7 @@ function setResultAttributes(
     result.hasFillForm = params.hasFillForm;
     result.generatedPageObjectPath = params.generatedPageObjectPath;
     result.generatedExtendingPageObjectPath = params.generatedExtendingPageObjectPath;
-    result.historyUid = params.pageObjectBuilder.historyUidCounter;
+    result.historyUid = params.useHistoryUid !== undefined ? params.useHistoryUid : params.pageObjectBuilder.historyUidCounter;
     if (params.origin) {
         params.origin!.childPages.forEach(childPage => {
             const childName = CaseConvert.fromPascal.toCamel(childPage.name);
@@ -86,4 +86,5 @@ interface IPageObjLoadParams {
     hasFillForm: boolean;
     generatedPageObjectPath: Path;
     generatedExtendingPageObjectPath: Path;
+    useHistoryUid?: number;
 }

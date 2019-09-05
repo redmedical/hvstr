@@ -170,10 +170,11 @@ export class PageObjectBuilder {
                 origin: scope,
                 newChild: child,
                 route: scope.route,
-                hasFillForm: scope.hasFillForm
+                hasFillForm: scope.hasFillForm,
+                useHistoryUid: scope.historyUid,
             });
         this.options.logger.logSuccess(`✓  [appendChild]\t${instruct.name} to ${scope.name}`);
-        this.options.logger.debug('append Child to ' + parent + ' for instruct:', instruct, 'result:', child);
+        this.options.logger.debug('append Child to ', parent, ' for instruct:', instruct, 'result:', child);
         return parent;
     }
 
@@ -337,6 +338,7 @@ export class PageObjectBuilder {
             generatedExtendingPageObjectPath,
             hasFillForm: params.hasFillForm,
             jsCode: jsCode,
+            useHistoryUid: params.useHistoryUid,
         });
     }
 
@@ -378,4 +380,5 @@ interface IOpenAndGeneratePageObjectInstruct {
     newChild?: IPageObjectInFabrication;
     route?: string;
     hasFillForm: boolean;
+    useHistoryUid?: number;
 }
