@@ -93,7 +93,7 @@ export class GeneratedPageObjectCodeGenerator {
                 .addLine(`data: {`)
                 .increaseDepth();
             fillFormElements.forEach(x => {
-                params.codeBuilder.addLine(`${Utils.firstCharToLowerCase(x.id)}?: ${params.customSnippets.types(x)};`);
+                params.codeBuilder.addLine(`${Utils.firstCharToLowerCase(x.pureId)}?: ${params.customSnippets.types(x)};`);
             });
 
             params.codeBuilder
