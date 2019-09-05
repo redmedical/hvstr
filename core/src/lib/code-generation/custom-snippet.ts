@@ -102,7 +102,7 @@ export function initCustomSnippet(): CustomSnippets {
                 return;
             }
             codeBuilder
-                .addLine(`if (data.${Utils.firstCharToLowerCase(element.id)}) {`)
+                .addLine(`if (data.${Utils.firstCharToLowerCase(element.pureId)}) {`)
                 .increaseDepth()
                 .addLine(`await this.get${element.id}().sendKeys(data.${Utils.firstCharToLowerCase(element.id)});`)
                 .decreaseDepth()
