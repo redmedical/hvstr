@@ -1,8 +1,8 @@
 export class Utils {
-    static readonly isCamelArrayId: RegExp = /^[A-Z][a-zA-Z0-9]*\[\]$/gm;
-    static readonly isKebabArrayId: RegExp = /^([a-z][a-z]*[0-9]*)(-([a-z][a-z]*[0-9]*))*(\[\])$/gm;
-    static readonly isValidCamelId: RegExp = /^[A-Z][a-zA-Z0-9]*(\[\])?$/gm;
-    static readonly isValidKebabId: RegExp = /^([a-z][a-z]*[0-9]*)(-([a-z][a-z]*[0-9]*))*(\[\])?$/gm;
+    static readonly isCamelArrayId: RegExp = /^[A-Z][a-zA-Z0-9]*\[\]$/m;
+    static readonly isKebabArrayId: RegExp = /^([a-z][a-z]*[0-9]*)(-([a-z][a-z]*[0-9]*))*(\[\])$/m;
+    static readonly isValidCamelId: RegExp = /^[A-Z][a-zA-Z0-9]*(\[\])?$/m;
+    static readonly isValidKebabId: RegExp = /^([a-z][a-z]*[0-9]*)(-([a-z][a-z]*[0-9]*))*(\[\])?$/m;
 
     static readonly getE2eElementTreeFunctionName: string = 'getE2eElementTree';
     static readonly getListFunctionName: string = 'getE2eElementList';

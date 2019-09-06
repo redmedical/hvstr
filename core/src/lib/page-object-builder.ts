@@ -5,15 +5,15 @@ import { GeneratedPageObjectCodeGenerator } from './code-generation/generated-pa
 import { QueuedCodeBuilder } from './code-generation/code-builder/queued-code-builder';
 import { ProjectPathUtil, Path } from './local-utils/path';
 import { ExtendingPageObjectCodeGenerator } from './code-generation/extending-page-object-code-generator';
-import { E2eElement } from './e2e-element/e2e-element';
 import { IPageObjectInFabrication } from './page-object/page-object-in-fabrication';
 import { compilePageObject, requirePageObject } from './page-object/page-object-loader';
 import { IChildPage } from './page-object/child-page';
 import { Awaiter } from './local-utils/types';
-import { initCustomSnippet, CustomSnippets } from './code-generation/element-function-custom-snippet';
+import { initCustomSnippet, CustomSnippets } from './code-generation/custom-snippet';
 import { E2eElementTree } from './e2e-element/e2e-element-tree';
 import { IPageObjectBuilderOptions, IPageObjectBuilderInputOptions } from './page-object-builder-options';
 import { defaults } from 'lodash';
+import { DefaultLogger } from './local-utils/logger';
 
 /**
  * Contains all important interfaces to generate page-objects.
@@ -32,6 +32,8 @@ export class PageObjectBuilder {
     public customSnippets: CustomSnippets;
     packagePath: ProjectPathUtil;
 
+    historyUidCounter: number;
+
     private options: IPageObjectBuilderOptions = {
         codeBuilder: new QueuedCodeBuilder('  '),
         awaiter: (async () => { }),
@@ -39,6 +41,8 @@ export class PageObjectBuilder {
         e2eTestPath:  '/e2e',
         doNotCreateDirectories: false,
         enableCustomBrowser: false,
+        logger: new DefaultLogger(),
+        pageLoadTimeOut: 0,
     };
 
     /**
@@ -49,13 +53,15 @@ export class PageObjectBuilder {
     constructor(
         options: IPageObjectBuilderInputOptions,
     ) {
-        this.options = defaults({...options}, this.options);
+        this.options = defaults({ ...options }, this.options);
+        this.options.logger = defaults({ ...this.options.logger }, new DefaultLogger());
         this.packagePath = new ProjectPathUtil(process.cwd(), this.options.e2eTestPath!);
         if (!this.options.doNotCreateDirectories) {
             this.packagePath.createAllDirectories();
         }
         this.customSnippets = initCustomSnippet();
         BrowserApi.setWaitForAngularEnabled(this.options.waitForAngularEnabled);
+        this.historyUidCounter = -1;
     }
 
     /**
@@ -72,22 +78,29 @@ export class PageObjectBuilder {
      */
     public async generate(instruct: IGenerationInstruction, origin?: IPageObjectInFabrication): Promise<IPageObjectInFabrication> {
         if (!instruct.name) {
-            throw new Error('a new page object needs an name!');
+            const error = new Error('a new page object needs an name!');
+            this.options.logger.error(error);
+            throw error;
         }
         await this.executeByPreparer(instruct, origin);
+        this.historyUidCounter++;
+
         const newTree: E2eElementTree = new E2eElementTree(await BrowserApi.getE2eElementTree())
             .restrict(instruct.excludeElements, instruct.restrictToElements)
             .mergeDuplicateArrayElements()
             .resolveConflicts();
-        return await this.openAndGeneratePageObject({
+        const result = await this.openAndGeneratePageObject({
             instruct,
             pageObjectName: instruct.name!,
             instructPath: instruct.path,
-            e2eElementTree: newTree.tree,
+            e2eElementTree: newTree,
             childPages: [],
             origin,
             hasFillForm: false
         });
+        this.options.logger.logSuccess(`✓  [generate]\t\t${instruct.name}`);
+        this.options.logger.debug('generate for instruct:', instruct, 'result:', result);
+        return result;
     }
 
     /**
@@ -106,21 +119,26 @@ export class PageObjectBuilder {
             instruct.path = scope.instruct.path;
         }
         await this.executeByPreparer(instruct, scope);
+        this.historyUidCounter++;
+
         const newTree: E2eElementTree = new E2eElementTree(await BrowserApi.getE2eElementTree())
             .restrict(instruct.excludeElements, instruct.restrictToElements)
             .mergeTo(scope.e2eElementTree)
             .mergeDuplicateArrayElements()
             .resolveConflicts();
-        return await this.openAndGeneratePageObject({
+        const result = await this.openAndGeneratePageObject({
             instruct,
             pageObjectName: scope.name,
             instructPath: scope.instruct.path,
-            e2eElementTree: newTree.tree,
+            e2eElementTree: newTree,
             childPages: scope.childPages,
             origin: scope,
             route: scope.route,
             hasFillForm: scope.hasFillForm
         });
+        this.options.logger.logSuccess(`✓  [append]\t\tto ${scope.name}`);
+        this.options.logger.debug('append to ' + scope + ' for instruct:', instruct, 'result:', result);
+        return result;
     }
 
     /**
@@ -152,8 +170,11 @@ export class PageObjectBuilder {
                 origin: scope,
                 newChild: child,
                 route: scope.route,
-                hasFillForm: scope.hasFillForm
+                hasFillForm: scope.hasFillForm,
+                useHistoryUid: scope.historyUid,
             });
+        this.options.logger.logSuccess(`✓  [appendChild]\t${instruct.name} to ${scope.name}`);
+        this.options.logger.debug('append Child to ', parent, ' for instruct:', instruct, 'result:', child);
         return parent;
     }
 
@@ -179,6 +200,8 @@ export class PageObjectBuilder {
                 route,
                 hasFillForm: scope.hasFillForm
             });
+        this.options.logger.logSuccess(`✓  [addNavigateTo]\tto ${scope.name}`);
+        this.options.logger.debug('added NavigateTo result:', parent);
         return parent;
     }
 
@@ -210,6 +233,8 @@ export class PageObjectBuilder {
                 route: scope.route,
                 hasFillForm: true
             });
+        this.options.logger.logSuccess(`✓  [addFillForm]\tto ${scope.name}`);
+        this.options.logger.debug('added FillForm result:', parent);
         return parent;
     }
 
@@ -218,30 +243,36 @@ export class PageObjectBuilder {
      * @private
      */
     async executeByPreparer(instruct: IGenerationInstruction, origin: IPageObjectInFabrication | undefined): Promise<void> {
+        this.options.logger.debug('executeByPreparer for instruct', instruct, 'with origin:', origin);
         const awaiter: Awaiter = instruct.awaiter || this.options.awaiter;
         if (instruct.from) {
-            await this.executeByPreparer(instruct.from.instruct, instruct.from.origin);
+            this.options.logger.debug('instruct has from entity with history step ', instruct.from.historyUid);
+            if (instruct.from.historyUid !== this.historyUidCounter) {
+                await this.executeByPreparer(instruct.from.instruct, instruct.from.origin);
+            }
         } else if (origin) {
-            await this.executeByPreparer(origin.instruct, origin.origin);
+            this.options.logger.debug('instruct has origin with history step ', origin.historyUid);
+            if (origin.historyUid !== this.historyUidCounter) {
+                await this.executeByPreparer(origin.instruct, origin.origin);
+            }
         }
         if (instruct.byRoute) {
             await BrowserApi.navigate(instruct.byRoute);
             // After the redirect, the script continues while the browser is still loading.
             // it looks like waitForAngular resolves the promise immediately, because no Angular app
             await BrowserApi.awaitDocumentToBeReady();
-            await BrowserApi.sleep(2000);
             if (this.options.waitForAngularEnabled) {
                 await BrowserApi.waitForAngular();
             }
+            await BrowserApi.sleep(this.options.pageLoadTimeOut);
         }
-        await awaiter(1);
         if (instruct.byAction) {
             instruct.byAction();
         }
         else if (instruct.byActionAsync) {
             await instruct.byActionAsync();
         }
-        await awaiter(2);
+        await awaiter();
     }
 
     /**
@@ -259,12 +290,12 @@ export class PageObjectBuilder {
             generateGeneratedPageObject.generatePageObject({
                 pageName: params.pageObjectName,
                 generatedPageObjectPath,
-                elementTreeRoot: params.e2eElementTree,
+                elementTree: params.e2eElementTree,
                 childPages: params.childPages,
                 codeBuilder: this.options.codeBuilder!,
                 route: params.route,
                 hasFillForm: params.hasFillForm,
-                rules: this.customSnippets,
+                customSnippets: this.customSnippets,
             });
         if (!params.instruct.virtual) {
             this.writePageObject(generatedPageObject, generatedPageObjectPath);
@@ -286,12 +317,12 @@ export class PageObjectBuilder {
         const generatedPageObjectWithoutChildren: string =
             generateGeneratedPageObject.generatePageObject({
                 pageName: params.pageObjectName,
-                elementTreeRoot: params.e2eElementTree,
+                elementTree: params.e2eElementTree,
                 childPages: [],
                 codeBuilder: this.options.codeBuilder!,
                 route: params.route,
                 hasFillForm: params.hasFillForm,
-                rules: this.customSnippets,
+                customSnippets: this.customSnippets,
             });
         const jsCode = compilePageObject(generatedPageObjectWithoutChildren);
 
@@ -307,6 +338,7 @@ export class PageObjectBuilder {
             generatedExtendingPageObjectPath,
             hasFillForm: params.hasFillForm,
             jsCode: jsCode,
+            useHistoryUid: params.useHistoryUid,
         });
     }
 
@@ -342,10 +374,11 @@ interface IOpenAndGeneratePageObjectInstruct {
     instruct: IGenerationInstruction;
     pageObjectName: string;
     instructPath?: string;
-    e2eElementTree: E2eElement[];
+    e2eElementTree: E2eElementTree;
     childPages: IChildPage[];
     origin?: IPageObjectInFabrication;
     newChild?: IPageObjectInFabrication;
     route?: string;
     hasFillForm: boolean;
+    useHistoryUid?: number;
 }

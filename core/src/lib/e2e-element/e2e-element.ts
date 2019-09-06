@@ -8,6 +8,12 @@ import { CaseConvert } from '../local-utils/case-converter';
 export class E2eElement {
     public idInput: string;
     public parentElement?: E2eElement;
+    /**
+     * the html type of that element. It is always written in UPPER-CASE.
+     *
+     * @type {string}
+     * @memberof E2eElement
+     */
     public type: string;
     public children: E2eElement[];
     public getterFunction: GetterFunction | undefined;
@@ -19,7 +25,7 @@ export class E2eElement {
         parent?: E2eElement,
     ){
         this.idInput = data.id;
-        this.type = data.type;
+        this.type = data.type.toUpperCase();
         this.children = data.children.map((x: ISimpleE2EElement) => new E2eElement(x, this));
         this.parentElement = parent;
     }

@@ -4,7 +4,7 @@ describe('QueuedCodeBuilder', () => {
     let cb: QueuedCodeBuilder;
     const tabDepth = '    ';
 
-    beforeEach(()=>{
+    beforeEach(() => {
         cb = new QueuedCodeBuilder(tabDepth);
     });
 
@@ -67,6 +67,16 @@ describe('QueuedCodeBuilder', () => {
         expect(cb.getResult()).toEqual('');
     });
 
+    it('should add dynamic conditional line', () => {
+        cb.addDynamicConditionalLine('I am a line', () => true);
+        expect(cb.getResult()).toEqual('I am a line\n');
+    });
+
+    it('should not add dynamic conditional line', () => {
+        cb.addDynamicConditionalLine('I am a line', () => false);
+        expect(cb.getResult()).toEqual('');
+    });
+
     it('should add dynamic line', () => {
         cb.addDynamicLine(() => 'I am a line');
         expect(cb.getResult()).toEqual('I am a line\n');
@@ -79,4 +89,34 @@ describe('QueuedCodeBuilder', () => {
             .addLine('3');
         expect(cb.getResult()).toEqual('1\n2\n3\n');
     });
+
+    describe('imports', () => {
+        it('should add imports', () => {
+            cb.addImport('A', 'B');
+            cb.addImportStatements();
+            expect(cb.getResult()).toEqual(`import { A } from 'B';\n`);
+        });
+
+        it('should add multiple imports', () => {
+            cb.addImport('A', 'B');
+            cb.addImport('C', 'D');
+            cb.addImportStatements();
+            expect(cb.getResult()).toEqual(`import { A } from 'B';\nimport { C } from 'D';\n`);
+        });
+
+        it('should add alias imports', () => {
+            cb.addImport('A', 'B', 'C');
+            cb.addImportStatements();
+            expect(cb.getResult()).toEqual(`import { A as C } from 'B';\n`);
+        });
+
+        it('reset should clear imports', () => {
+            cb.addImport('A', 'B');
+            cb.reset();
+            cb.addImportStatements();
+            expect(cb.getResult()).toEqual(``);
+        });
+    });
+
+
 });

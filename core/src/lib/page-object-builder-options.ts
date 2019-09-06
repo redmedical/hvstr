@@ -1,5 +1,6 @@
 import { QueuedCodeBuilder } from './code-generation/code-builder/queued-code-builder';
 import { Awaiter } from './local-utils/types';
+import { IOptionalLogger, ILogger } from './local-utils/logger';
 
 export interface IPageObjectBuilderInputOptions {
     /**
@@ -50,6 +51,21 @@ export interface IPageObjectBuilderInputOptions {
      * @type {boolean}
      */
     enableCustomBrowser?: boolean;
+    /**
+     * define a custom logger.
+     *
+     * the default logger is silent.
+     *
+     * @type {ILogger}
+     * @memberof IPageObjectBuilderInputOptions
+     */
+    logger?: IOptionalLogger;
+    /**
+     * Time to wait after document is ready and if wait for angular enabled, is ready, before generating page object.
+     *
+     * @type {number} ms
+     */
+    pageLoadTimeOut?: number;
 }
 
 
@@ -59,11 +75,6 @@ export interface IPageObjectBuilderInputOptions {
  * @export
  * @interface IPageObjectBuilderOptions
  */
-export interface IPageObjectBuilderOptions extends IPageObjectBuilderInputOptions {
-    codeBuilder: QueuedCodeBuilder;
-    awaiter: Awaiter;
-    e2eTestPath: string;
-    waitForAngularEnabled: boolean;
-    doNotCreateDirectories: boolean;
-    enableCustomBrowser: boolean;
-}
+export type IPageObjectBuilderOptions = Required<IPageObjectBuilderInputOptions & { logger: ILogger }>;
+
+
