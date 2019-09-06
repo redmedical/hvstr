@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IGeneratePageObjectAddImportsParameter | hvstr-core API Documentation</title>
+	<title>CodeBuilderImports | hvstr-core API Documentation</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,85 +56,135 @@
 					<a href="../index.html">Globals</a>
 				</li>
 				<li>
-					<a href="igeneratepageobjectaddimportsparameter.html">IGeneratePageObjectAddImportsParameter</a>
+					<a href="codebuilderimports.html">CodeBuilderImports</a>
 				</li>
 			</ul>
-			<h1>Interface IGeneratePageObjectAddImportsParameter</h1>
+			<h1>Class CodeBuilderImports</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="igeneratepageobjectparameter.html" class="tsd-signature-type">IGeneratePageObjectParameter</a>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">IGeneratePageObjectAddImportsParameter</span>
-								<ul class="tsd-hierarchy">
-									<li>
-										<a href="igeneratepageobjectrootparameter.html" class="tsd-signature-type">IGeneratePageObjectRootParameter</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
+						<span class="target">CodeBuilderImports</span>
 					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/iqueuestep.html" class="tsd-signature-type">IQueueStep</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section tsd-is-not-exported">
+						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="igeneratepageobjectaddimportsparameter.html#childpages" class="tsd-kind-icon">child<wbr>Pages</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-not-exported"><a href="igeneratepageobjectaddimportsparameter.html#codebuilder" class="tsd-kind-icon">code<wbr>Builder</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="igeneratepageobjectaddimportsparameter.html#generatedpageobjectpath" class="tsd-kind-icon">generated<wbr>Page<wbr>Object<wbr>Path</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="codebuilderimports.html#imports" class="tsd-kind-icon">imports</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="codebuilderimports.html#add" class="tsd-kind-icon">add</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="codebuilderimports.html#execute" class="tsd-kind-icon">execute</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="codebuilderimports.html#reset" class="tsd-kind-icon">reset</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="childpages" class="tsd-anchor"></a>
-					<h3>child<wbr>Pages</h3>
-					<div class="tsd-signature tsd-kind-icon">child<wbr>Pages<span class="tsd-signature-symbol">:</span> <a href="ichildpage.html" class="tsd-signature-type">IChildPage</a><span class="tsd-signature-symbol">[]</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="imports" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> imports</h3>
+					<div class="tsd-signature tsd-kind-icon">imports<span class="tsd-signature-symbol">:</span> <a href="../index.html#ilibraryimport" class="tsd-signature-type">ILibraryImport</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/redmedical/HVSTR/blob/fd9c85a/core/src/lib/code-generation/generated-page-object-code-generator.ts#L258">lib/code-generation/generated-page-object-code-generator.ts:258</a></li>
+							<li>Defined in <a href="https://github.com/redmedical/hvstr/blob/cb97212/core/src/lib/code-generation/code-builder/code-builder-imports.ts#L14">lib/code-generation/code-builder/code-builder-imports.ts:14</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-not-exported">
-					<a name="codebuilder" class="tsd-anchor"></a>
-					<h3>code<wbr>Builder</h3>
-					<div class="tsd-signature tsd-kind-icon">code<wbr>Builder<span class="tsd-signature-symbol">:</span> <a href="../classes/queuedcodebuilder.html" class="tsd-signature-type">QueuedCodeBuilder</a></div>
-					<aside class="tsd-sources">
-						<p>Overrides <a href="igeneratepageobjectparameter.html">IGeneratePageObjectParameter</a>.<a href="igeneratepageobjectparameter.html#codebuilder">codeBuilder</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/redmedical/HVSTR/blob/fd9c85a/core/src/lib/code-generation/generated-page-object-code-generator.ts#L256">lib/code-generation/generated-page-object-code-generator.ts:256</a></li>
-						</ul>
-					</aside>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="add" class="tsd-anchor"></a>
+					<h3>add</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, from<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, importAs<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/redmedical/hvstr/blob/cb97212/core/src/lib/code-generation/code-builder/code-builder-imports.ts#L16">lib/code-generation/code-builder/code-builder-imports.ts:16</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>element: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>from: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> importAs: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="generatedpageobjectpath" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> generated<wbr>Page<wbr>Object<wbr>Path</h3>
-					<div class="tsd-signature tsd-kind-icon">generated<wbr>Page<wbr>Object<wbr>Path<span class="tsd-signature-symbol">:</span> <a href="../classes/path.html" class="tsd-signature-type">Path</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/redmedical/HVSTR/blob/fd9c85a/core/src/lib/code-generation/generated-page-object-code-generator.ts#L257">lib/code-generation/generated-page-object-code-generator.ts:257</a></li>
-						</ul>
-					</aside>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="execute" class="tsd-anchor"></a>
+					<h3>execute</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">execute<span class="tsd-signature-symbol">(</span>codeBuilder<span class="tsd-signature-symbol">: </span><a href="codebuilder.html" class="tsd-signature-type">CodeBuilder</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/iqueuestep.html">IQueueStep</a>.<a href="../interfaces/iqueuestep.html#execute">execute</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/redmedical/hvstr/blob/cb97212/core/src/lib/code-generation/code-builder/code-builder-imports.ts#L27">lib/code-generation/code-builder/code-builder-imports.ts:27</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>codeBuilder: <a href="codebuilder.html" class="tsd-signature-type">CodeBuilder</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="reset" class="tsd-anchor"></a>
+					<h3>reset</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">reset<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/redmedical/hvstr/blob/cb97212/core/src/lib/code-generation/code-builder/code-builder-imports.ts#L35">lib/code-generation/code-builder/code-builder-imports.ts:35</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -150,17 +200,20 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-is-private tsd-is-not-exported">
-						<a href="igeneratepageobjectaddimportsparameter.html" class="tsd-kind-icon">IGenerate<wbr>Page<wbr>Object<wbr>Add<wbr>Imports<wbr>Parameter</a>
+					<li class="current tsd-kind-class">
+						<a href="codebuilderimports.html" class="tsd-kind-icon">Code<wbr>Builder<wbr>Imports</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="igeneratepageobjectaddimportsparameter.html#childpages" class="tsd-kind-icon">child<wbr>Pages</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="codebuilderimports.html#imports" class="tsd-kind-icon">imports</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-not-exported">
-								<a href="igeneratepageobjectaddimportsparameter.html#codebuilder" class="tsd-kind-icon">code<wbr>Builder</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="codebuilderimports.html#add" class="tsd-kind-icon">add</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="igeneratepageobjectaddimportsparameter.html#generatedpageobjectpath" class="tsd-kind-icon">generated<wbr>Page<wbr>Object<wbr>Path</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="codebuilderimports.html#execute" class="tsd-kind-icon">execute</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="codebuilderimports.html#reset" class="tsd-kind-icon">reset</a>
 							</li>
 						</ul>
 					</li>

@@ -94,9 +94,16 @@
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="e2eelementtree.html#tree" class="tsd-kind-icon">tree</a></li>
 							</ul>
 						</section>
+						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
+							<h3>Accessors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-private"><a href="e2eelementtree.html#flattree" class="tsd-kind-icon">flat<wbr>Tree</a></li>
+							</ul>
+						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="e2eelementtree.html#flattreerecursive" class="tsd-kind-icon">flat<wbr>Tree<wbr>Recursive</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="e2eelementtree.html#mergeduplicatearrayelements" class="tsd-kind-icon">merge<wbr>Duplicate<wbr>Array<wbr>Elements</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="e2eelementtree.html#mergeto" class="tsd-kind-icon">merge<wbr>To</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="e2eelementtree.html#resolveconflicts" class="tsd-kind-icon">resolve<wbr>Conflicts</a></li>
@@ -118,7 +125,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/redmedical/HVSTR/blob/fd9c85a/core/src/lib/e2e-element/e2e-element-tree.ts#L12">lib/e2e-element/e2e-element-tree.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/redmedical/hvstr/blob/cb97212/core/src/lib/e2e-element/e2e-element-tree.ts#L12">lib/e2e-element/e2e-element-tree.ts:12</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -140,13 +147,71 @@
 					<div class="tsd-signature tsd-kind-icon">tree<span class="tsd-signature-symbol">:</span> <a href="e2eelement.html" class="tsd-signature-type">E2eElement</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/redmedical/HVSTR/blob/fd9c85a/core/src/lib/e2e-element/e2e-element-tree.ts#L12">lib/e2e-element/e2e-element-tree.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/redmedical/hvstr/blob/cb97212/core/src/lib/e2e-element/e2e-element-tree.ts#L12">lib/e2e-element/e2e-element-tree.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-private">
+					<a name="flattree" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> flat<wbr>Tree</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> flatTree<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="e2eelement.html" class="tsd-signature-type">E2eElement</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/redmedical/hvstr/blob/cb97212/core/src/lib/e2e-element/e2e-element-tree.ts#L44">lib/e2e-element/e2e-element-tree.ts:44</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Flat tree returns an array, which contains all elements of the tree. So you don&#39;t need to iterate recursive through nested elements.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>readonly</dt>
+									<dd></dd>
+									<dt>type</dt>
+									<dd><p>{E2eElement[]}</p>
+									</dd>
+									<dt>memberof</dt>
+									<dd><p>E2eElementTree</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="e2eelement.html" class="tsd-signature-type">E2eElement</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="flattreerecursive" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> flat<wbr>Tree<wbr>Recursive</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">flat<wbr>Tree<wbr>Recursive<span class="tsd-signature-symbol">(</span>layer<span class="tsd-signature-symbol">: </span><a href="e2eelement.html" class="tsd-signature-type">E2eElement</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="e2eelement.html" class="tsd-signature-type">E2eElement</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/redmedical/hvstr/blob/cb97212/core/src/lib/e2e-element/e2e-element-tree.ts#L47">lib/e2e-element/e2e-element-tree.ts:47</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>layer: <a href="e2eelement.html" class="tsd-signature-type">E2eElement</a><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="e2eelement.html" class="tsd-signature-type">E2eElement</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="mergeduplicatearrayelements" class="tsd-anchor"></a>
 					<h3>merge<wbr>Duplicate<wbr>Array<wbr>Elements</h3>
@@ -157,7 +222,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/redmedical/HVSTR/blob/fd9c85a/core/src/lib/e2e-element/e2e-element-tree.ts#L24">lib/e2e-element/e2e-element-tree.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/redmedical/hvstr/blob/cb97212/core/src/lib/e2e-element/e2e-element-tree.ts#L24">lib/e2e-element/e2e-element-tree.ts:24</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="e2eelementtree.html" class="tsd-signature-type">E2eElementTree</a></h4>
@@ -174,7 +239,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/redmedical/HVSTR/blob/fd9c85a/core/src/lib/e2e-element/e2e-element-tree.ts#L16">lib/e2e-element/e2e-element-tree.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/redmedical/hvstr/blob/cb97212/core/src/lib/e2e-element/e2e-element-tree.ts#L16">lib/e2e-element/e2e-element-tree.ts:16</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -200,7 +265,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/redmedical/HVSTR/blob/fd9c85a/core/src/lib/e2e-element/e2e-element-tree.ts#L28">lib/e2e-element/e2e-element-tree.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/redmedical/hvstr/blob/cb97212/core/src/lib/e2e-element/e2e-element-tree.ts#L28">lib/e2e-element/e2e-element-tree.ts:28</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="e2eelementtree.html" class="tsd-signature-type">E2eElementTree</a></h4>
@@ -217,7 +282,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/redmedical/HVSTR/blob/fd9c85a/core/src/lib/e2e-element/e2e-element-tree.ts#L32">lib/e2e-element/e2e-element-tree.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/redmedical/hvstr/blob/cb97212/core/src/lib/e2e-element/e2e-element-tree.ts#L32">lib/e2e-element/e2e-element-tree.ts:32</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -255,6 +320,12 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="e2eelementtree.html#tree" class="tsd-kind-icon">tree</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-private">
+								<a href="e2eelementtree.html#flattree" class="tsd-kind-icon">flat<wbr>Tree</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="e2eelementtree.html#flattreerecursive" class="tsd-kind-icon">flat<wbr>Tree<wbr>Recursive</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="e2eelementtree.html#mergeduplicatearrayelements" class="tsd-kind-icon">merge<wbr>Duplicate<wbr>Array<wbr>Elements</a>
