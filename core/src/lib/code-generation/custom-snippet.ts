@@ -123,7 +123,7 @@ export function initCustomSnippet(): CustomSnippets {
             }
             codeBuilder
                 .addImport('protractor', 'protractor/built/ptor')
-                .addLine('{')
+                .addLine(`if (await this.get${element.id}().isPresent()){`)
                 .increaseDepth()
                 .addLine(`const input = this.get${element.id}();`)
                 .addLine(`const value: string = await input.getAttribute('value');`)
