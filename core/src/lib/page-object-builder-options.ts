@@ -38,20 +38,6 @@ export interface IPageObjectBuilderInputOptions {
      */
     doNotCreateDirectories?: boolean;
     /**
-     * Add browser parameter to page-objects constructor, to enable support of forked browser instances.
-     * ([browser.forkNewDriverInstance](https://www.protractortest.org/#/api?view=ProtractorBrowser.prototype.forkNewDriverInstance))
-     *
-     * the page-objects constructor will look something like this.:
-     * ```ts
-     * constructor(
-     *     browser?: ProtractorBrowser = browser
-     * ){}
-     * ```
-     *
-     * @type {boolean}
-     */
-    enableCustomBrowser?: boolean;
-    /**
      * define a custom logger.
      *
      * the default logger is silent.

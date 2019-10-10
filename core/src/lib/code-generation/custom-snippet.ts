@@ -56,10 +56,8 @@ export function initCustomSnippet(): CustomSnippets {
                     parentGetterFunction.functionName
                     }(${parentGetterFunctionParameters})${selectorSourceSubSelector}`;
                 selectorSource += isCamelArrayId ? '.all' : '.element';
-            } else if (options.enableCustomBrowser) {
-                selectorSource = isCamelArrayId ? 'this.browser.element.all' : 'this.browser.element';
             } else {
-                selectorSource = isCamelArrayId ? 'element.all' : 'element';
+                selectorSource = isCamelArrayId ? 'this.browser.element.all' : 'this.browser.element';
             }
 
             const parameterString = parameters
