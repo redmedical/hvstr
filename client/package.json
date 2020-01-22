@@ -9,12 +9,12 @@
     "typedoc": "node node_modules/typedoc/bin/typedoc --out ../docs/api/client --module commonjs --mode file --target es6 --readme none --name \"hvstr-client API Documentation\" --tsconfig ./tsconfig.json --ignoreCompilerErrors ./src/"
   },
   "dependencies": {
-    "@redmedical/hvstr-utils": "1.2.1"
+    "@redmedical/hvstr-utils": "file:../utils"
   },
   "devDependencies": {
-    "tslint": "^5.16.0",
-    "typedoc": "^0.14.2",
-    "typescript": "^3.5.2"
+    "tslint": "5.20.1",
+    "typedoc": "0.16.8",
+    "typescript": "3.6.4"
   },
   "publishConfig": {
     "access": "public"
