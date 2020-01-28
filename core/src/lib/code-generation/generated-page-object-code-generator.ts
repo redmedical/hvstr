@@ -19,8 +19,7 @@ export class GeneratedPageObjectCodeGenerator {
     generatePageObject(params: IGeneratePageObjectParameter): string {
         params.codeBuilder
             .reset()
-            .addImport('by', 'protractor')
-            .addImport('element', 'protractor');
+            .addImport('by', 'protractor');
 
         this
             .addImports(params)
@@ -42,10 +41,6 @@ export class GeneratedPageObjectCodeGenerator {
             .addPublicMembers(childPageNames, codeBuilder)
             .addEmptyLine(codeBuilder)
             .addConstructor(codeBuilder, childPageNames);
-
-        if (Boolean(params.route) && !this.options.enableCustomBrowser) {
-            codeBuilder.addImport('browser', 'protractor');
-        }
 
         this
             .addRoute(codeBuilder, params.route)
@@ -76,7 +71,7 @@ export class GeneratedPageObjectCodeGenerator {
     }
 
     private addNavigateTo(codeBuilder: QueuedCodeBuilder, route: string | undefined): GeneratedPageObjectCodeGenerator {
-        codeBuilder.addConditionalLine(`navigateTo = () => ${this.options.enableCustomBrowser ? 'this.' : ''}browser.get(this.route);`, Boolean(route));
+        codeBuilder.addConditionalLine(`navigateTo = () => this.browser.get(this.route);`, Boolean(route));
         return this;
     }
 
@@ -131,42 +126,26 @@ export class GeneratedPageObjectCodeGenerator {
     }
 
     private addConstructor(codeBuilder: QueuedCodeBuilder, childPageNames: string[]): GeneratedPageObjectCodeGenerator {
-        if (childPageNames.length === 0 && !this.options.enableCustomBrowser) {
-            return this;
-        }
-        if (this.options.enableCustomBrowser) {
-            codeBuilder
-                .addLine(`constructor(`)
-                .increaseDepth()
-                .addImport('ProtractorBrowser', 'protractor')
-                .addImport('browser', 'protractor', '_browser')
-                .addLine(`private customBrowser?: ProtractorBrowser,`)
-                .decreaseDepth()
-                .addLine(`) {`);
-        } else {
-            codeBuilder
-                .addLine(`constructor() {`);
-        }
         codeBuilder
+            .addLine(`constructor(`)
+            .increaseDepth()
+            .addImport('ProtractorBrowser', 'protractor')
+            .addImport('browser', 'protractor', '_browser')
+            .addLine(`private customBrowser?: ProtractorBrowser,`)
+            .decreaseDepth()
+            .addLine(`) {`)
             .increaseDepth();
         childPageNames.forEach(childPageName => {
-            if (this.options.enableCustomBrowser) {
-                codeBuilder.addLine(`this.${Utils.firstCharToLowerCase(childPageName)} = new ${childPageName}(customBrowser);`);
-            } else {
-                codeBuilder.addLine(`this.${Utils.firstCharToLowerCase(childPageName)} = new ${childPageName}();`);
-            }
+            codeBuilder.addLine(`this.${Utils.firstCharToLowerCase(childPageName)} = new ${childPageName}(customBrowser);`);
         });
         codeBuilder
             .decreaseDepth()
+            .addLine(`}`)
+            .addLine(`protected get browser(): ProtractorBrowser {`)
+            .increaseDepth()
+            .addLine(`return this.customBrowser || _browser;`)
+            .decreaseDepth()
             .addLine(`}`);
-        if (this.options.enableCustomBrowser) {
-            codeBuilder
-                .addLine(`protected get browser() {`)
-                .increaseDepth()
-                .addLine(`return this.customBrowser || _browser;`)
-                .decreaseDepth()
-                .addLine(`}`);
-        }
         return this;
     }
 

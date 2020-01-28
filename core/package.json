@@ -11,22 +11,23 @@
     "coverage": "ts-node node_modules/nyc/bin/nyc.js npm rum test"
   },
   "dependencies": {
-    "@redmedical/hvstr-utils": "1.2.1",
-    "lodash": "^4.17.14",
-    "mkdirp": "^0.5.1",
-    "protractor": "^5.4.2",
-    "require-from-string": "^2.0.2",
-    "ts-node": "^8.1.0"
+    "@redmedical/hvstr-client": "file:../client",
+    "@redmedical/hvstr-utils": "file:../utils",
+    "lodash": "4.17.15",
+    "mkdirp": "0.5.1",
+    "protractor": "5.4.2",
+    "require-from-string": "2.0.2",
+    "ts-node": "8.6.2"
   },
   "devDependencies": {
-    "@types/jasmine": "^3.3.13",
-    "@types/lodash": "^4.14.136",
-    "@types/node": "^10.14.10",
-    "jasmine": "^3.4.0",
-    "nyc": "^14.1.1",
-    "tslint": "^5.16.0",
-    "typedoc": "^0.14.2",
-    "typescript": "^3.4.5"
+    "@types/jasmine": "3.3.13",
+    "@types/lodash": "4.14.136",
+    "@types/node": "10.14.10",
+    "jasmine": "3.5.0",
+    "nyc": "14.1.1",
+    "tslint": "5.20.1",
+    "typedoc": "0.16.8",
+    "typescript": "3.6.4"
   },
   "publishConfig": {
     "access": "public"

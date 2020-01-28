@@ -40,7 +40,6 @@ export class PageObjectBuilder {
         waitForAngularEnabled: true,
         e2eTestPath:  '/e2e',
         doNotCreateDirectories: false,
-        enableCustomBrowser: false,
         logger: new DefaultLogger(),
         pageLoadTimeOut: 0,
     };
