@@ -11,8 +11,8 @@
     "coverage": "ts-node node_modules/nyc/bin/nyc.js npm rum test"
   },
   "dependencies": {
-    "@redmedical/hvstr-client": "file:../client",
-    "@redmedical/hvstr-utils": "file:../utils",
+    "@redmedical/hvstr-client": "1.2.1",
+    "@redmedical/hvstr-utils": "1.2.1",
     "lodash": "4.17.15",
     "mkdirp": "0.5.1",
     "protractor": "5.4.2",

@@ -1,0 +1,15 @@
+{
+    "name": "hvstr",
+    "mode": "modules",
+    "out": "docs",
+    "theme": "default",
+    "target": "es6",
+    "ignoreCompilerErrors": "true",
+    "preserveConstEnums": "true",
+    "exclude": "**/node_modules/**",
+    "external-modulemap": ".*\/hvstr\/([\\w\\-_0-9]+)\/",
+    "stripInternal": "false",
+    "excludeNotExported": "false",
+    "excludePrivate": "true",
+    "externalPattern": "true"
+}

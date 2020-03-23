@@ -1,0 +1,17 @@
+{
+  "name": "hvstr",
+  "version": "1.2.1",
+  "scripts": {
+    "typedoc": "node node_modules/typedoc/bin/typedoc --options ./typedoc.json ./",
+    "bootstrap": "lerna bootstrap",
+    "postinstall": "npm run bootstrap",
+    "build": "lerna run build",
+    "lint": "lerna run lint",
+    "test": "lerna run test"
+  },
+  "dependencies": {
+    "lerna": "^4.0.0",
+    "typedoc": "^0.15.4",
+    "typedoc-plugin-external-module-map": "^1.0.0"
+  }
+}
