@@ -1,0 +1,15 @@
+{
+    "name": "hvstr",
+    "mode": "modules",
+    "out": "docs/api",
+    "theme": "default",
+    "target": "es6",
+    "ignoreCompilerErrors": "true",
+    "preserveConstEnums": "true",
+    "exclude": "**/node_modules/**",
+    "external-modulemap": "(client|core|utils)\/",
+    "stripInternal": "false",
+    "excludeNotExported": "false",
+    "excludePrivate": "true",
+    "externalPattern": "true"
+}

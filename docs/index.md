@@ -9,8 +9,4 @@
 * [Custom Snippets](./guide/custom-snipptes.md)
 * [Name Conflicts](./guide/name-conflicts.md)
 
-## Api Documentation
-
-* [Core](./api/core)
-* [Client](./api/client)
-* [Utils](./api/utils/)
+## [Api Documentation](./api/index.html)

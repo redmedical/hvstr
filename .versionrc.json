@@ -1,0 +1,70 @@
+{
+    "bumpFiles": [
+        {
+            "filename": "package.json",
+            "updater": "app-updater.js"
+        },
+        {
+            "filename": "package-lock.json",
+            "type": "json"
+        },
+        {
+            "filename": "utils/package.json",
+            "updater": "app-updater.js"
+        },
+        {
+            "filename": "utils/package-lock.json",
+            "type": "json"
+        },
+        {
+            "filename": "core/package.json",
+            "updater": "app-updater.js"
+        },
+        {
+            "filename": "core/package-lock.json",
+            "type": "json"
+        },
+        {
+            "filename": "client/package.json",
+            "updater": "app-updater.js"
+        },
+        {
+            "filename": "client/package-lock.json",
+            "type": "json"
+        }
+    ],
+    "types": [
+        {
+            "type": "feat",
+            "section": "Features"
+        },
+        {
+            "type": "fix",
+            "section": "Bug Fixes"
+        },
+        {
+            "type": "chore",
+            "hidden": true
+        },
+        {
+            "type": "docs",
+            "hidden": true
+        },
+        {
+            "type": "style",
+            "hidden": true
+        },
+        {
+            "type": "refactor",
+            "hidden": true
+        },
+        {
+            "type": "perf",
+            "hidden": true
+        },
+        {
+            "type": "test",
+            "hidden": true
+        }
+    ]
+}
